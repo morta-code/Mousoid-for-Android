@@ -84,7 +84,7 @@ public class ConnectionActivity extends Activity implements OnItemLongClickListe
 		
 	}
 
-	class ServerFinderTask extends AsyncTask<Byte, Void, ArrayList<ServerListItemData>>{
+	class UDPFinderTask extends AsyncTask<Void, Void, ArrayList<ServerListItemData>>{
 
 		@Override
 		protected void onPreExecute() {
@@ -95,28 +95,21 @@ public class ConnectionActivity extends Activity implements OnItemLongClickListe
 		}
 		
 		@Override
-		protected ArrayList<ServerListItemData> doInBackground(Byte... params) {
+		protected ArrayList<ServerListItemData> doInBackground(Void... params) {
 			ArrayList<ServerListItemData> datas = new ArrayList<ServerListItemData>();
-			if(params[0] == SEARCH_WIFI){
-				TreeMap<String, InetAddress> availableUDPServers = ConnectionManager.getAvailableUDPServers(4000);
-				Set<String> keySet = availableUDPServers.keySet();
-				Log.i("Connection Activity", "Servers found! " + Integer.toString(keySet.size()));
-				for (String string : keySet) {
-					Log.i("Connection Activity", string);
-					ServerListItemData data = new ServerListItemData();
-					data.name = string;
-					data.address = availableUDPServers.get(string).getHostAddress();
-					datas.add(data);
-				}
-			}else{
-				TreeMap<String, BluetoothDevice> availableBluetoothServers = ConnectionManager.getAvailableBluetoothServers(5000);
-				Set<String> keySet = availableBluetoothServers.keySet();
-				for (String string : keySet) {
-					ServerListItemData data = new ServerListItemData();
-					data.name = string;
-					data.address = availableBluetoothServers.get(string).getAddress();
-					datas.add(data);
-				}
+			
+			TreeMap<String, InetAddress> availableUDPServers = ConnectionManager.getAvailableUDPServers(4000);
+			if(availableUDPServers == null)
+				return null;
+			// TODO change to TreeMap<String, String>
+			Set<String> keySet = availableUDPServers.keySet();
+			Log.i("Connection Activity", "Servers found! " + Integer.toString(keySet.size()));
+			for (String string : keySet) {
+				Log.i("Connection Activity", string);
+				ServerListItemData data = new ServerListItemData();
+				data.name = string;
+				data.address = availableUDPServers.get(string).getHostAddress();
+				datas.add(data);
 			}
 			return datas;
 		}
@@ -126,6 +119,10 @@ public class ConnectionActivity extends Activity implements OnItemLongClickListe
 			startSearch.setEnabled(true);
 			connectToAddress.setEnabled(true);
 			progressBar.setVisibility(View.GONE);
+			if(result == null){
+				Toast.makeText(ConnectionActivity.this, R.string.noDevice, Toast.LENGTH_LONG).show();
+				return;
+			}
 			if(result.size() == 0)
 				Toast.makeText(ConnectionActivity.this, R.string.noHosts, Toast.LENGTH_SHORT).show();
 			else
@@ -138,9 +135,9 @@ public class ConnectionActivity extends Activity implements OnItemLongClickListe
 		
 		public void onClick(View v) {
 			if(wifiRadio.isChecked()){
-				new ServerFinderTask().execute(SEARCH_WIFI);
+				new UDPFinderTask().execute();
 			}else{
-				new ServerFinderTask().execute(SEARCH_BLUETOOTH);
+				searchBluetooth();
 			}
 		}
 		
@@ -256,4 +253,32 @@ public class ConnectionActivity extends Activity implements OnItemLongClickListe
 		new UDPConnectionTask().execute(address);
 	}
 
+	private void searchBluetooth(){
+		startSearch.setEnabled(false);
+		connectToAddress.setEnabled(false);
+		progressBar.setVisibility(View.VISIBLE);
+		adapter.clear();
+		
+		ArrayList<ServerListItemData> datas = new ArrayList<ServerListItemData>();
+		TreeMap<String, String> availableBluetoothServers = ConnectionManager.getAvailableBluetoothServers();
+		if(availableBluetoothServers == null){
+			Toast.makeText(ConnectionActivity.this, R.string.noDevice, Toast.LENGTH_LONG).show();
+			return;
+		}
+		Set<String> keySet = availableBluetoothServers.keySet();
+		for (String string : keySet) {
+			ServerListItemData data = new ServerListItemData();
+			data.name = string;
+			data.address = availableBluetoothServers.get(string);
+			datas.add(data);
+		}
+		
+		startSearch.setEnabled(true);
+		connectToAddress.setEnabled(true);
+		progressBar.setVisibility(View.GONE);
+		if(datas.size() == 0)
+			Toast.makeText(ConnectionActivity.this, R.string.noHosts, Toast.LENGTH_SHORT).show();
+		else
+			adapter.addAll(datas);
+	}
 }

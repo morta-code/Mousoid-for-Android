@@ -27,5 +27,6 @@
     <string name="connectionEstablished">Connection established</string>
     <string name="noHosts">No server host found</string>
     <string name="noAddress">Enter a hostname or an IP address</string>
+    <string name="noDevice">Selected device is not supported</string>
 
 </resources>

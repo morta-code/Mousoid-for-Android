@@ -10,8 +10,10 @@ import java.net.NetworkInterface;
 import java.net.SocketAddress;
 import java.net.SocketException;
 import java.util.Map;
+import java.util.Set;
 import java.util.TreeMap;
 
+import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.util.Log;
 
@@ -82,9 +84,16 @@ public class ConnectionManager {
 		return map;
 	}
 	
-	public static TreeMap<String, BluetoothDevice> getAvailableBluetoothServers(int timeout) {
-		// TODO Auto-generated method 
-		TreeMap<String, BluetoothDevice> map = new TreeMap<String, BluetoothDevice>();
+	public static TreeMap<String, String> getAvailableBluetoothServers() {
+		TreeMap<String, String> map = new TreeMap<String, String>();
+		BluetoothAdapter adapter = BluetoothAdapter.getDefaultAdapter();
+		if(adapter == null){
+			return null;
+		}
+		Set<BluetoothDevice> bondedDevices = adapter.getBondedDevices();
+		for (BluetoothDevice bluetoothDevice : bondedDevices) {
+			map.put(bluetoothDevice.getName(), bluetoothDevice.getAddress());
+		}
 		return map;
 	}
 	
