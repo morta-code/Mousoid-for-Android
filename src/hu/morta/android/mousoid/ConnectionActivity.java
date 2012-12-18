@@ -178,12 +178,31 @@ public class ConnectionActivity extends Activity implements OnItemLongClickListe
 		
 	}
 	
+	class RadioChangedListener implements OnClickListener{
+		
+		public void onClick(View v) {
+			if(v == wifiRadio && !wifiSelected){
+				editAddress.setVisibility(View.VISIBLE);
+				connectToAddress.setVisibility(View.VISIBLE);
+				adapter.clear();
+				wifiSelected = true;
+				return;
+			}
+			if(v == bluetoothRadio && wifiSelected){
+				editAddress.setVisibility(View.GONE);
+				connectToAddress.setVisibility(View.GONE);
+				adapter.clear();
+				wifiSelected = false;
+				// TODO külön adapterbe a wifi és külön adapterbe a bt (bt-hez nem kell lekérdezés)
+				return;
+			}
+		}
+		
+	}
 	////////////////////////////////////////////////////////////////////////
 	
-	private static final byte SEARCH_WIFI = 0;
-	private static final byte SEARCH_BLUETOOTH = 1;
-	
 	private static ServerListItemAdapter adapter = null;
+	private boolean wifiSelected = true;
 	
 	private ListView serversList;
 	private Button startSearch;
@@ -192,6 +211,8 @@ public class ConnectionActivity extends Activity implements OnItemLongClickListe
 	private EditText editAddress;
 	private RadioButton wifiRadio;
 	private RadioButton bluetoothRadio;
+	
+	private RadioChangedListener radioChangedListener;
 
 	////////////////////////////////////////////////////////////////////////
 	
@@ -212,20 +233,12 @@ public class ConnectionActivity extends Activity implements OnItemLongClickListe
 		connectToAddress.setOnClickListener(this);
 		progressBar = (ProgressBar) findViewById(R.id.connectionProgressBar);
 		editAddress = (EditText) findViewById(R.id.addressField);
+		
+		radioChangedListener = new RadioChangedListener();
 		wifiRadio = (RadioButton) findViewById(R.id.radioWifi);
-		wifiRadio.setOnClickListener(new OnClickListener() {
-			public void onClick(View v) {
-				editAddress.setVisibility(View.VISIBLE);
-				connectToAddress.setVisibility(View.VISIBLE);
-			}
-		});
+		wifiRadio.setOnClickListener(radioChangedListener);
 		bluetoothRadio = (RadioButton) findViewById(R.id.radioBluetooth);
-		bluetoothRadio.setOnClickListener(new OnClickListener() {
-			public void onClick(View v) {
-				editAddress.setVisibility(View.GONE);
-				connectToAddress.setVisibility(View.GONE);
-			}
-		});
+		bluetoothRadio.setOnClickListener(radioChangedListener);
 		// TODO fekvő helyzetben a lista animálódjon át
 		
 	}
