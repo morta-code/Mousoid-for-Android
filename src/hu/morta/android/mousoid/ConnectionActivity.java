@@ -137,7 +137,7 @@ public class ConnectionActivity extends Activity implements OnItemLongClickListe
 	class SearchButtonListener implements OnClickListener{
 		
 		public void onClick(View v) {
-			if(((RadioButton) findViewById(R.id.radioWifi)).isChecked()){
+			if(wifiRadio.isChecked()){
 				new ServerFinderTask().execute(SEARCH_WIFI);
 			}else{
 				new ServerFinderTask().execute(SEARCH_BLUETOOTH);
@@ -192,6 +192,9 @@ public class ConnectionActivity extends Activity implements OnItemLongClickListe
 	private Button startSearch;
 	private Button connectToAddress;
 	private ProgressBar progressBar;
+	private EditText editAddress;
+	private RadioButton wifiRadio;
+	private RadioButton bluetoothRadio;
 
 	////////////////////////////////////////////////////////////////////////
 	
@@ -211,7 +214,21 @@ public class ConnectionActivity extends Activity implements OnItemLongClickListe
 		connectToAddress = ((Button) findViewById(R.id.buttonConnect));
 		connectToAddress.setOnClickListener(this);
 		progressBar = (ProgressBar) findViewById(R.id.connectionProgressBar);
-		
+		editAddress = (EditText) findViewById(R.id.addressField);
+		wifiRadio = (RadioButton) findViewById(R.id.radioWifi);
+		wifiRadio.setOnClickListener(new OnClickListener() {
+			public void onClick(View v) {
+				editAddress.setVisibility(View.VISIBLE);
+				connectToAddress.setVisibility(View.VISIBLE);
+			}
+		});
+		bluetoothRadio = (RadioButton) findViewById(R.id.radioBluetooth);
+		bluetoothRadio.setOnClickListener(new OnClickListener() {
+			public void onClick(View v) {
+				editAddress.setVisibility(View.GONE);
+				connectToAddress.setVisibility(View.GONE);
+			}
+		});
 		// TODO fekvő helyzetben a lista animálódjon át
 		
 	}
@@ -231,7 +248,7 @@ public class ConnectionActivity extends Activity implements OnItemLongClickListe
 	}
 
 	public void onClick(View v) {
-		String address = ((EditText) findViewById(R.id.addressField)).getText().toString();
+		String address = editAddress.getText().toString();
 		if(address == null || address.equals("")){
 			Toast.makeText(ConnectionActivity.this, R.string.noAddress, Toast.LENGTH_SHORT).show();
 			return;
