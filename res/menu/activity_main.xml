@@ -1,0 +1,7 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/multitouch" android:title="@string/multitouch" android:checkable="true"></item>
+    <item android:id="@+id/showButtons" android:title="@string/showButtons" android:checkable="true"></item>
+    <item android:id="@+id/enablePresenter" android:title="@string/enablePresenter" android:checkable="true"></item>
+    <item android:id="@+id/connections" android:title="@string/connections"></item>
+    <item android:id="@+id/autoOrientation" android:title="@string/autoOrientation" android:checkable="true"></item>
+</menu>

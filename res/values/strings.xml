@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Mousoid</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="menu_settings">Settings</string>
+    <string name="title_activity_main">Mousoid</string>
+    <string name="left">Left</string>
+    <string name="middle">Middle</string>
+    <string name="right">Right</string>
+    <string name="multitouch">Multitouch</string>
+    <string name="showButtons">Show buttons</string>
+    <string name="enablePresenter">Enable presenter mode</string>
+    <string name="connections">Connections</string>
+    <string name="pgup">PgUp</string>
+    <string name="pgdown">PgDown</string>
+    <string name="autoOrientation">Auto switching orientation</string>
+    <string name="title_activity_presenter">Presenter</string>
+    <string name="title_activity_connection">Connection</string>
+    <string name="title_activity_settings">Settings</string>
+    <string name="wifi">Connect via WiFi</string>
+    <string name="bluetooth">Connect via Bluetooth</string>
+    <string name="startscan">Start scan</string>
+    <string name="stopscan">Stop scan</string>
+
+</resources>
