@@ -10,13 +10,10 @@ public class UDPConnection implements MousoidConnection {
 	private DatagramSocket socket;
 	private InetAddress address;
 
-	public UDPConnection(InetAddress address) {
+	public UDPConnection(InetAddress address) throws SocketException {
 		this.address = address;
-		try {
-			socket = new DatagramSocket(10066);
-		} catch (SocketException e) {
-			e.printStackTrace();
-		}
+		this.socket = new DatagramSocket(10066, address);
+		// TODO it was new DatagramSocket(10066)
 	}
 
 	public void sendBytes(byte[] bytes) {
@@ -33,6 +30,10 @@ public class UDPConnection implements MousoidConnection {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	public void close() {
+		socket.close();
 	}
 
 }

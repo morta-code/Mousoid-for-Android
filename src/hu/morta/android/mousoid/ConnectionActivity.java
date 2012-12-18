@@ -1,6 +1,7 @@
 package hu.morta.android.mousoid;
 
 import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -9,6 +10,7 @@ import java.util.TreeMap;
 import android.app.Activity;
 import android.bluetooth.BluetoothDevice;
 import android.content.Context;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
@@ -20,13 +22,17 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
-public class ConnectionActivity extends Activity implements OnItemClickListener{
+public class ConnectionActivity extends Activity implements OnItemLongClickListener, OnClickListener{
 	
 	class ServerListItemData{
 		public String name;
@@ -83,6 +89,8 @@ public class ConnectionActivity extends Activity implements OnItemClickListener{
 		@Override
 		protected void onPreExecute() {
 			startSearch.setEnabled(false);
+			connectToAddress.setEnabled(false);
+			progressBar.setVisibility(View.VISIBLE);
 			adapter.clear();
 		}
 		
@@ -116,7 +124,12 @@ public class ConnectionActivity extends Activity implements OnItemClickListener{
 		@Override
 		protected void onPostExecute(ArrayList<ServerListItemData> result) {
 			startSearch.setEnabled(true);
-			adapter.addAll(result);
+			connectToAddress.setEnabled(true);
+			progressBar.setVisibility(View.GONE);
+			if(result.size() == 0)
+				Toast.makeText(ConnectionActivity.this, R.string.noHosts, Toast.LENGTH_SHORT).show();
+			else
+				adapter.addAll(result);
 		}
 		
 	}
@@ -124,10 +137,45 @@ public class ConnectionActivity extends Activity implements OnItemClickListener{
 	class SearchButtonListener implements OnClickListener{
 		
 		public void onClick(View v) {
-			if(radioWifi.isChecked()){
+			if(((RadioButton) findViewById(R.id.radioWifi)).isChecked()){
 				new ServerFinderTask().execute(SEARCH_WIFI);
 			}else{
 				new ServerFinderTask().execute(SEARCH_BLUETOOTH);
+			}
+		}
+		
+	}
+	
+	class UDPConnectionTask extends AsyncTask<String, Void, Boolean>{
+		
+		@Override
+		protected void onPreExecute() {
+			startSearch.setEnabled(false);
+			connectToAddress.setEnabled(false);
+			progressBar.setVisibility(View.VISIBLE);
+		}
+
+		@Override
+		protected Boolean doInBackground(String... params) {
+			boolean b;
+			try {
+				b = ConnectionManager.connectToUDP(InetAddress.getByName(params[0]));
+			} catch (UnknownHostException e) {
+				return false;
+			}
+			return b;
+		}
+		
+		@Override
+		protected void onPostExecute(Boolean result) {
+			startSearch.setEnabled(true);
+			connectToAddress.setEnabled(true);
+			progressBar.setVisibility(View.GONE);
+			if(result){
+				Toast.makeText(ConnectionActivity.this, R.string.connectionEstablished, Toast.LENGTH_SHORT).show();
+				startActivity(new Intent(ConnectionActivity.this, MainActivity.class));
+			}else{
+				Toast.makeText(ConnectionActivity.this, R.string.connectionFailed, Toast.LENGTH_LONG).show();
 			}
 		}
 		
@@ -141,10 +189,9 @@ public class ConnectionActivity extends Activity implements OnItemClickListener{
 	private static ServerListItemAdapter adapter = null;
 	
 	private ListView serversList;
-	private RadioButton radioWifi;
-	private RadioButton radioBluetoot;
 	private Button startSearch;
-	private Handler handler = new Handler();
+	private Button connectToAddress;
+	private ProgressBar progressBar;
 
 	////////////////////////////////////////////////////////////////////////
 	
@@ -158,25 +205,38 @@ public class ConnectionActivity extends Activity implements OnItemClickListener{
 		
 		serversList = (ListView) findViewById(R.id.serversList);
 		serversList.setAdapter(adapter);
-		serversList.setOnItemClickListener(this);
-		radioWifi = (RadioButton) findViewById(R.id.radioWifi);
-		radioBluetoot = (RadioButton) findViewById(R.id.radioBluetooth);
+		serversList.setOnItemLongClickListener(this);
 		startSearch = (Button) findViewById(R.id.buttonStart);
+		startSearch.setOnClickListener(new SearchButtonListener());
+		connectToAddress = ((Button) findViewById(R.id.buttonConnect));
+		connectToAddress.setOnClickListener(this);
+		progressBar = (ProgressBar) findViewById(R.id.connectionProgressBar);
 		
 		// TODO fekvő helyzetben a lista animálódjon át
-		startSearch.setOnClickListener(new SearchButtonListener());
 		
 	}
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
+		// TODO
 		getMenuInflater().inflate(R.menu.activity_connection, menu);
 		return true;
 	}
 
-	public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
-		// TODO
+
+	public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+		new UDPConnectionTask().execute(((ServerListItemData)serversList.getItemAtPosition(position)).address);
+		return true;
+	}
+
+	public void onClick(View v) {
+		String address = ((EditText) findViewById(R.id.addressField)).getText().toString();
+		if(address == null || address.equals("")){
+			Toast.makeText(ConnectionActivity.this, R.string.noAddress, Toast.LENGTH_SHORT).show();
+			return;
+		}
+		new UDPConnectionTask().execute(address);
 	}
 
 }

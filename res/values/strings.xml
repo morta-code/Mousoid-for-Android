@@ -22,5 +22,10 @@
     <string name="bluetooth">Connect via Bluetooth</string>
     <string name="startscan">Start scan</string>
     <string name="stopscan">Stop scan</string>
+    <string name="connect">Connect</string>
+    <string name="connectionFailed">Bad address or connection failed</string>
+    <string name="connectionEstablished">Connection established</string>
+    <string name="noHosts">No server host found</string>
+    <string name="noAddress">Enter a hostname or an IP address</string>
 
 </resources>

@@ -1,5 +1,6 @@
 package hu.morta.android.mousoid;
 
+import java.io.IOException;
 import java.io.OutputStream;
 
 import android.bluetooth.BluetoothSocket;
@@ -16,5 +17,14 @@ public class RFCOMMConnection implements MousoidConnection {
 	public void sendBytes(byte[] bytes) {
 		// TODO Auto-generated method stub
 	}
+	
+	public void close() {
+		try {
+			socket.close();
+		} catch (IOException e) {
+			// TODO test
+			socket = null;
+		}
+	};
 
 }

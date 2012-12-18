@@ -30,8 +30,16 @@ public class ConnectionManager {
 		return connection;
 	}
 
-	public static synchronized void connectToUDP(final InetAddress address){
-		connection = new UDPConnection(address);
+	public static synchronized boolean connectToUDP(final InetAddress address){
+		if(connection != null)
+			connection.close();
+		connection = null;
+		try {
+			connection = new UDPConnection(address);
+		} catch (SocketException e) {
+			return false;
+		}
+		return true;
 	}
 	
 	public static TreeMap<String, InetAddress> getAvailableUDPServers(int timeoutInMillis) {
@@ -67,8 +75,6 @@ public class ConnectionManager {
 			e.printStackTrace();
 		} catch (IOException e) {
 			if(e instanceof InterruptedIOException){
-				Log.i("UDP Server:", "Return map size: " + Integer.toString(map.size()));
-				Log.i("UDP Server:", "First pair: " + map.keySet().toArray()[0] +" "+ map.get(map.keySet().toArray()[0]).getHostName());
 				return map;
 			}
 			e.printStackTrace();
@@ -76,12 +82,12 @@ public class ConnectionManager {
 		return map;
 	}
 	
-
 	public static TreeMap<String, BluetoothDevice> getAvailableBluetoothServers(int timeout) {
 		// TODO Auto-generated method 
 		TreeMap<String, BluetoothDevice> map = new TreeMap<String, BluetoothDevice>();
 		return map;
 	}
+	
 	////////////////////////////////////////////////////////////////////////
 	
 	public static void sendKey(byte key) {
