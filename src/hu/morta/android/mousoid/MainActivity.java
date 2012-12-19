@@ -44,7 +44,7 @@ public class MainActivity extends Activity {
 			public void onClick(View v) {
 				new Thread(new Runnable() {
 					public void run() {
-						ConnectionManager.sendKey(Key.SPACE);
+						ConnectionManager.sendKey(Constant.KEY_SPACE);
 					}
 				}).start();
 			}

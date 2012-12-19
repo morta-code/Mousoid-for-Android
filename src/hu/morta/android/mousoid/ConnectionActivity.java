@@ -253,7 +253,11 @@ public class ConnectionActivity extends Activity implements OnItemLongClickListe
 
 
 	public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-		new UDPConnectionTask().execute(((ServerListItemData)serversList.getItemAtPosition(position)).address);
+		if(wifiSelected)
+			new UDPConnectionTask().execute(((ServerListItemData)serversList.getItemAtPosition(position)).address);
+		else{
+			ConnectionManager.connectToRFCOMM(((ServerListItemData)serversList.getItemAtPosition(position)).address);
+		}
 		return true;
 	}
 

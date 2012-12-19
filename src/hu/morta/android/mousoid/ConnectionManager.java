@@ -19,13 +19,6 @@ import android.util.Log;
 
 public class ConnectionManager {
 	
-	private static final byte HEADER = 66;
-	private static final byte WHO_ARE_YOU = -128;
-	private static final byte NAME = 8;
-	private static final byte KEY = 1;
-	
-	////////////////////////////////////////////////////////////////////////
-	
 	private static MousoidConnection connection = null;
 
 	public static MousoidConnection getConnection() {
@@ -44,13 +37,25 @@ public class ConnectionManager {
 		return true;
 	}
 	
+	public static synchronized boolean connectToRFCOMM(String address){
+		if(connection != null)
+			connection.close();
+		connection = null;
+		try {
+			connection = new RFCOMMConnection(BluetoothAdapter.getDefaultAdapter().getRemoteDevice(address));
+		} catch (IOException e) {
+			return false;
+		}
+		return true;
+	}
+	
 	public static TreeMap<String, InetAddress> getAvailableUDPServers(int timeoutInMillis) {
 		TreeMap<String, InetAddress> map = new TreeMap<String, InetAddress>();
 		try {
 			DatagramSocket temporarySocket = new DatagramSocket();
-
+			
 			temporarySocket.setBroadcast(true);
-			temporarySocket.send(new DatagramPacket(new byte[]{HEADER, WHO_ARE_YOU}, 2, InetAddress.getByName("224.0.0.1"), 10066));
+			temporarySocket.send(new DatagramPacket(new byte[]{Constant.HEADER, Constant.WHO_ARE_YOU}, 2, InetAddress.getByName("224.0.0.1"), 10066));
 			
 			temporarySocket.setSoTimeout(timeoutInMillis);
 			Log.i("UDP Server:", "I sent UDP");
@@ -61,8 +66,8 @@ public class ConnectionManager {
 				Log.i("UDP Server:", "I received UDP");
 				byte[] data = received.getData();
 				Log.i("UDP Server:", "Arrived bytes: " + Byte.toString(data[0]) +" "+ Byte.toString(data[1]));
-				if(data[0] != HEADER) continue;
-				if(data[1] != NAME) continue;
+				if(data[0] != Constant.HEADER) continue;
+				if(data[1] != Constant.NAME) continue;
 				Log.i("UDP Server:", "Arrived datagram OK");
 				InetAddress inetAddress = received.getAddress();
 				String name = "";
@@ -104,7 +109,7 @@ public class ConnectionManager {
 			Log.w("ConnectionManager", "Nincs kapcsolat!");
 			return;
 		}
-		connection.sendBytes(new byte[]{HEADER, KEY, key});
+		connection.sendBytes(new byte[]{Constant.HEADER, Constant.KEYCOMMAND, key});
 	}
 	
 	public static void sendMouseWheel() {
@@ -120,7 +125,18 @@ public class ConnectionManager {
 	}
 	
 	public static void sendName(CharSequence name) {
-		// TODO
+		if(connection == null){
+			Log.w("ConnectionManager", "Nincs kapcsolat!");
+			return;
+		}
+		byte b[] = new byte[name.length()+3];
+		b[0] = Constant.HEADER;
+		b[1] = Constant.NAME;
+		b[2] = (byte) name.length();
+		for (int i = 0; i < name.length(); i++) {
+			b[i+30] = (byte) name.charAt(i);
+		}
+		connection.sendBytes(b);
 	}
 
 }
