@@ -20,6 +20,7 @@ import android.util.Log;
 public class ConnectionManager {
 	
 	private static MousoidConnection connection = null;
+	public static String name = "Mousoid";
 
 	public static MousoidConnection getConnection() {
 		return connection;
@@ -36,6 +37,7 @@ public class ConnectionManager {
 			Log.w("ConnectionManager", address.getHostAddress());
 			return false;
 		}
+		sendName(name);
 		return true;
 	}
 	
@@ -140,7 +142,7 @@ public class ConnectionManager {
 		b[1] = Constant.NAME;
 		b[2] = (byte) name.length();
 		for (int i = 0; i < name.length(); i++) {
-			b[i+30] = (byte) name.charAt(i);
+			b[i+3] = (byte) name.charAt(i);
 		}
 		connection.sendBytes(b);
 	}
