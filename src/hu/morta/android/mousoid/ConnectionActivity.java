@@ -158,6 +158,7 @@ public class ConnectionActivity extends Activity implements OnItemLongClickListe
 			try {
 				b = ConnectionManager.connectToUDP(InetAddress.getByName(params[0]));
 			} catch (UnknownHostException e) {
+				Log.w("ConnectionActivity", "UnknownHostException");
 				return false;
 			}
 			return b;

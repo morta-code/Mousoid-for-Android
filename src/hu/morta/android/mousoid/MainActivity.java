@@ -7,19 +7,24 @@ import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 
 public class MainActivity extends Activity {
+	
+	
 	SharedPreferences preferences;
 
+	
+	
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     	preferences = getSharedPreferences("Mousoid", 0);
-        
+        Log.i("MainActivity", "onCreate");
         setContentView(R.layout.activity_main);
         
         if(ConnectionManager.getConnection() == null){
@@ -44,7 +49,7 @@ public class MainActivity extends Activity {
 			public void onClick(View v) {
 				new Thread(new Runnable() {
 					public void run() {
-						ConnectionManager.sendKey(Constant.KEY_SPACE);
+						ConnectionManager.sendMouseButton(Constant.CLICK, Constant.MOUSE_LEFT);
 					}
 				}).start();
 			}
@@ -53,6 +58,7 @@ public class MainActivity extends Activity {
     
     @Override
     protected void onResume() {
+        Log.i("MainActivity", "onResume");
     	if(ConnectionManager.getConnection() == null){
         	startActivity(new Intent(this, ConnectionActivity.class));
         }

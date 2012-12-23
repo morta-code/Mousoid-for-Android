@@ -12,8 +12,7 @@ public class UDPConnection implements MousoidConnection {
 
 	public UDPConnection(InetAddress address) throws SocketException {
 		this.address = address;
-		this.socket = new DatagramSocket(10066, address);
-		// TODO it was new DatagramSocket(10066)
+		this.socket = new DatagramSocket(10066);
 	}
 
 	public void sendBytes(byte[] bytes) {

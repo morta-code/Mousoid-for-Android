@@ -32,6 +32,8 @@ public class ConnectionManager {
 		try {
 			connection = new UDPConnection(address);
 		} catch (SocketException e) {
+			Log.w("ConnectionManager", "SocketException!");
+			Log.w("ConnectionManager", address.getHostAddress());
 			return false;
 		}
 		return true;
@@ -120,8 +122,12 @@ public class ConnectionManager {
 		// TODO
 	}
 	
-	public static void sendMouseButton() {
-		// TODO
+	public static void sendMouseButton(byte action, byte button) {
+		if(connection == null){
+			Log.w("ConnectionManager", "Nincs kapcsolat!");
+			return;
+		}
+		connection.sendBytes(new byte[]{Constant.HEADER, Constant.MOUSEBUTTON, action, button});
 	}
 	
 	public static void sendName(CharSequence name) {
