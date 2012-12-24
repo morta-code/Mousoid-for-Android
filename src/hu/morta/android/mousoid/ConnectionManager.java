@@ -147,4 +147,14 @@ public class ConnectionManager {
 		connection.sendBytes(b);
 	}
 
+	public static void sendCommand(Command c){
+		if(connection == null){
+			Log.w("ConnectionManager", "Nincs kapcsolat!");
+			return;
+		}
+		byte[] b = new byte[c.command.length+1];
+		b[0] = Constant.HEADER;
+		System.arraycopy(c.command, 0, b, 1, c.command.length);
+		connection.sendBytes(b);
+	}
 }

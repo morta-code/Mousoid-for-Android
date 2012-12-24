@@ -48,7 +48,7 @@ public class MainActivity extends Activity {
 	    @Override
 	    public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
 	    	Log.d("onScroll",e1.toString() + Float.toString(distanceX)+" "+Float.toString(distanceY));
-	    	
+	    	queue.add(new Command(Constant.MOUSEMOVE, (byte)(distanceX*mouseResolution), (byte)(distanceY*mouseResolution)));
 	    	return true;
 	    }
 	    
@@ -77,7 +77,11 @@ public class MainActivity extends Activity {
 	
 	private SharedPreferences preferences;
 	private GestureDetector detector;
+	private CommandQueue queue;
 	private boolean mouseMode;
+	private int mouseResolution;
+	private boolean multitouch;
+	private boolean showButtons;
 	
 	///////////////////////////////////////////////////////////////////
 	
@@ -85,29 +89,41 @@ public class MainActivity extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     	preferences = getSharedPreferences("Mousoid", 0);
-    	mouseMode = preferences.getBoolean("MOUSE", true);
         Log.i("MainActivity", "onCreate");        
         if(ConnectionManager.getConnection() == null){
         	startActivity(new Intent(this, ConnectionActivity.class));
         }
+
+    	mouseMode = preferences.getBoolean("MOUSE", true);
+        if(mouseMode){
+    		mouseResolution = preferences.getInt("RESOLUTION", 10);
+    		multitouch = preferences.getBoolean("MULTITOUCH", false);
+    		showButtons = preferences.getBoolean("BUTTONS", true);
+    		loadMouseInterface();
+    	}else{
+    		loadPresenterInterface();
+    	}
         
     }
     
+    ///////////////////////////////////////////////////////////////////
     @Override
     protected void onResume() {
         Log.i("MainActivity", "onResume");
     	if(ConnectionManager.getConnection() == null){
         	startActivity(new Intent(this, ConnectionActivity.class));
         }
-    	
-    	if(mouseMode){
-    		loadMouseInterface();
-    	}else{
-    		loadPresenterInterface();
-    	}
+    	queue = new CommandQueue();
     	super.onResume();
     }
 
+    @Override
+    protected void onPause() {
+        Log.i("MainActivity", "onPause");
+    	queue.interrupt();
+    	super.onPause();
+    }
+    
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.activity_main, menu);
