@@ -88,7 +88,7 @@ public interface Constant {
     public static final byte SCROLL_VERTICAL = -5;
     public static final byte SCROLL_HORIZONTAL = -6;
     
-    public static final byte MOUSE_LEFT = 0;
-    public static final byte MOUSE_MIDDLE = 1;
+    public static final byte MOUSE_LEFT = 1;
+    public static final byte MOUSE_MIDDLE = 4;
     public static final byte MOUSE_RIGHT = 2;
 }

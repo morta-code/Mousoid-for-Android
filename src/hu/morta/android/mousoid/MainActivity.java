@@ -69,17 +69,18 @@ public class MainActivity extends Activity {
 	    @Override
 	    public boolean onSingleTapConfirmed(MotionEvent e) {
 	    	Log.d("onSingleTapConfirmed",e.toString());
+	    	queue.add(new Command(Constant.MOUSEBUTTON, Constant.CLICK, Constant.MOUSE_LEFT));
 	    	return true;
 	    }
 	    
 	}
 	///////////////////////////////////////////////////////////////////
 	
-	private SharedPreferences preferences;
+	public static SharedPreferences preferences;
 	private GestureDetector detector;
 	private CommandQueue queue;
 	private boolean mouseMode;
-	private int mouseResolution;
+	private float mouseResolution;
 	private boolean multitouch;
 	private boolean showButtons;
 	
@@ -96,7 +97,7 @@ public class MainActivity extends Activity {
 
     	mouseMode = preferences.getBoolean("MOUSE", true);
         if(mouseMode){
-    		mouseResolution = preferences.getInt("RESOLUTION", 10);
+    		mouseResolution = preferences.getFloat("RESOLUTION", 2F);
     		multitouch = preferences.getBoolean("MULTITOUCH", false);
     		showButtons = preferences.getBoolean("BUTTONS", true);
     		loadMouseInterface();
