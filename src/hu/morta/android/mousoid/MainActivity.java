@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.ActivityInfo;
 import android.util.Log;
 import android.view.GestureDetector;
 import android.view.GestureDetector.SimpleOnGestureListener;
@@ -11,6 +12,7 @@ import android.view.Menu;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.Window;
 import android.widget.Button;
 
 public class MainActivity extends Activity {
@@ -114,13 +116,14 @@ public class MainActivity extends Activity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        this.requestWindowFeature(Window.FEATURE_NO_TITLE);
     	preferences = getSharedPreferences("Mousoid", 0);
         Log.i("MainActivity", "onCreate");        
         if(ConnectionManager.getConnection() == null){
         	startActivity(new Intent(this, ConnectionActivity.class));
         }
 
-    	mouseMode = preferences.getBoolean("MOUSE", true);
+    	mouseMode = preferences.getBoolean("MOUSE", false);
         if(mouseMode){
     		mouseResolution = preferences.getFloat("RESOLUTION", 1.7F);
     		multitouch = preferences.getBoolean("MULTITOUCH", false);
@@ -173,7 +176,15 @@ public class MainActivity extends Activity {
     }
     
     void loadPresenterInterface(){
-    	// TODO
+    	setContentView(R.layout.main_presenter);
+    	setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+    	findViewById(R.id.editLine).setVisibility(preferences.getBoolean("LINE_EDIT", true) == true ? View.VISIBLE : View.GONE);
+    	findViewById(R.id.arrowsLayout).setVisibility(preferences.getBoolean("ARROWS_LAYOUT", true) == true ? View.VISIBLE : View.GONE);
+    	findViewById(R.id.arrowsLayout).setVisibility(preferences.getBoolean("ARROWS", true) == true ? View.VISIBLE : View.GONE);
+    	findViewById(R.id.arrowsLayout).setVisibility(preferences.getBoolean("ARROWS", true) == true ? View.VISIBLE : View.GONE);
+    	findViewById(R.id.arrowsLayout).setVisibility(preferences.getBoolean("ARROWS", true) == true ? View.VISIBLE : View.GONE);
+    	findViewById(R.id.arrowsLayout).setVisibility(preferences.getBoolean("ARROWS", true) == true ? View.VISIBLE : View.GONE);
+    	findViewById(R.id.otherLayout).setVisibility(preferences.getBoolean("OTHER_LAYOUT", false) == true ? View.VISIBLE : View.GONE);
     }
     
     @Override
