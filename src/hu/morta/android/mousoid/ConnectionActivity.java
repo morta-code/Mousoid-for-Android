@@ -98,7 +98,7 @@ public class ConnectionActivity extends Activity implements OnItemLongClickListe
 		protected ArrayList<ServerListItemData> doInBackground(Void... params) {
 			ArrayList<ServerListItemData> datas = new ArrayList<ServerListItemData>();
 			
-			TreeMap<String, InetAddress> availableUDPServers = ConnectionManager.getAvailableUDPServers(4000);
+			TreeMap<String, InetAddress> availableUDPServers = ConnectionManager.getAvailableUDPServers(MainActivity.preferences.getInt("UDPTIMEOUT", 1500));
 			if(availableUDPServers == null)
 				return null;
 			// TODO change to TreeMap<String, String>

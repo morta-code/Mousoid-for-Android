@@ -18,62 +18,87 @@ public class MainActivity extends Activity {
 	class MousoidGestureListener extends GestureDetector.SimpleOnGestureListener{
 		@Override
 		public boolean onDoubleTap(MotionEvent e) {
-			Log.d("onDoubleTap",e.toString());
+//			Log.d("onDoubleTap",e.toString());
+			queue.add(new Command(Constant.MOUSEBUTTON, Constant.DOUBLE_CLICK, Constant.MOUSE_LEFT));
 			return true;
 		}
 		
-		@Override
-		public boolean onDoubleTapEvent(MotionEvent e) {
-			Log.d("onDoubleTapEvent",e.toString());
-			return true;
-		}
+//		@Override
+//		public boolean onDoubleTapEvent(MotionEvent e) {
+//			Log.d("onDoubleTapEvent",e.toString());
+//			return true;
+//		}
 		
-	    @Override
-	    public boolean onSingleTapUp(MotionEvent ev) {
-	    	Log.d("onSingleTapUp",ev.toString());
-	    	return true;
-	    }
+//	    @Override
+//	    public boolean onSingleTapUp(MotionEvent ev) {
+//	    	Log.d("onSingleTapUp",ev.toString());
+//	    	return true;
+//	    }
 	    
-	    @Override
-	    public void onShowPress(MotionEvent ev) {
-	    	Log.d("onShowPress",ev.toString());
-	    }
+//	    @Override
+//	    public void onShowPress(MotionEvent ev) {
+//	    	Log.d("onShowPress",ev.toString());
+//	    }
 	    
 	    @Override
 	    public void onLongPress(MotionEvent ev) {
-	    	Log.d("onLongPress",ev.toString());
+//	    	Log.d("onLongPress",ev.toString());
+			queue.add(new Command(Constant.MOUSEBUTTON, Constant.PRESS, Constant.MOUSE_LEFT));
 	    }
 	    
 	    // for move
 	    @Override
 	    public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
-	    	Log.d("onScroll",e1.toString() + Float.toString(distanceX)+" "+Float.toString(distanceY));
+//	    	Log.d("onScroll",e1.toString() + Float.toString(distanceX)+" "+Float.toString(distanceY));
 	    	queue.add(new Command(Constant.MOUSEMOVE, (byte)(distanceX*mouseResolution), (byte)(distanceY*mouseResolution)));
 	    	return true;
 	    }
 	    
-	    @Override
-	    public boolean onDown(MotionEvent ev) {
-	    	Log.d("onDownd",ev.toString());
-	    	return true;
-	    }
+//	    @Override
+//	    public boolean onDown(MotionEvent ev) {
+//	    	Log.d("onDownd",ev.toString());
+//	    	return true;
+//	    }
 	    
-	    @Override
-	    public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
-	    	Log.d("d",e1.toString());
-	    	Log.d("e2",e2.toString());
-	    	return true;
-	    }
+//	    @Override
+//	    public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
+//	    	Log.d("onFling d",e1.toString());
+//	    	Log.d("onFling e2",e2.toString());
+//	    	return true;
+//	    }
 	    
 	    // for click
 	    @Override
 	    public boolean onSingleTapConfirmed(MotionEvent e) {
-	    	Log.d("onSingleTapConfirmed",e.toString());
+//	    	Log.d("onSingleTapConfirmed",e.toString());
 	    	queue.add(new Command(Constant.MOUSEBUTTON, Constant.CLICK, Constant.MOUSE_LEFT));
 	    	return true;
 	    }
 	    
 	}
+	
+	class MouseButtonsListener implements OnClickListener{
+		public void onClick(View v) {
+			switch (v.getId()) {
+			case R.id.buttonLeft:
+				queue.add(new Command(Constant.MOUSEBUTTON, Constant.CLICK, Constant.MOUSE_LEFT));
+				return;
+			case R.id.buttonMiddle:
+				queue.add(new Command(Constant.MOUSEBUTTON, Constant.CLICK, Constant.MOUSE_MIDDLE));
+				return;
+			case R.id.buttonRight:
+				queue.add(new Command(Constant.MOUSEBUTTON, Constant.CLICK, Constant.MOUSE_RIGHT));
+				return;
+			case R.id.buttonScrollUp:
+				queue.add(new Command(Constant.MOUSEBUTTON, Constant.SCROLL_VERTICAL, (byte)-1));
+				return;
+			case R.id.buttonScrollDown:
+				queue.add(new Command(Constant.MOUSEBUTTON, Constant.SCROLL_VERTICAL, (byte)1));
+				return;
+			}
+		}
+	}
+	
 	///////////////////////////////////////////////////////////////////
 	
 	public static SharedPreferences preferences;
@@ -97,7 +122,7 @@ public class MainActivity extends Activity {
 
     	mouseMode = preferences.getBoolean("MOUSE", true);
         if(mouseMode){
-    		mouseResolution = preferences.getFloat("RESOLUTION", 2F);
+    		mouseResolution = preferences.getFloat("RESOLUTION", 1.7F);
     		multitouch = preferences.getBoolean("MULTITOUCH", false);
     		showButtons = preferences.getBoolean("BUTTONS", true);
     		loadMouseInterface();
@@ -131,24 +156,19 @@ public class MainActivity extends Activity {
         // TODO
         return true;
     }
-
+    
     ///////////////////////////////////////////////////////////////////
 
     void loadMouseInterface(){
     	setContentView(R.layout.main_mouse);
     	detector = new GestureDetector(this, new MousoidGestureListener());
     	if(preferences.getBoolean("BUTTONS", true)){
-    		Button button = (Button) findViewById(R.id.buttonLeft);
-            button.setOnClickListener(new OnClickListener() {
-    			
-    			public void onClick(View v) {
-    				new Thread(new Runnable() {
-    					public void run() {
-    						ConnectionManager.sendMouseButton(Constant.CLICK, Constant.MOUSE_LEFT);
-    					}
-    				}).start();
-    			}
-    		});
+    		MouseButtonsListener listener = new MouseButtonsListener();
+    		findViewById(R.id.buttonLeft).setOnClickListener(listener);
+    		findViewById(R.id.buttonMiddle).setOnClickListener(listener);
+    		findViewById(R.id.buttonRight).setOnClickListener(listener);
+    		findViewById(R.id.buttonScrollUp).setOnClickListener(listener);
+    		findViewById(R.id.buttonScrollDown).setOnClickListener(listener);
     	}
     }
     
