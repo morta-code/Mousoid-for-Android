@@ -4,15 +4,57 @@
     android:layout_height="match_parent"
     android:orientation="vertical" >
 
-    <EditText
-        android:id="@+id/editLine"
+    <LinearLayout
+		android:id="@+id/lineLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
-		android:maxLines="1"
-        android:textSize="20sp" >
-        <requestFocus />
-    </EditText>
+        android:visibility="gone"
+        android:layout_weight="1" >
+
+        <EditText
+	        android:id="@+id/editLine"
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        android:layout_weight="7"
+			android:maxLines="1"
+	        android:textSize="20sp" >
+	        <requestFocus />
+   		</EditText>
+        <Button
+            android:id="@+id/buttonLineOk"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+	        android:textSize="14sp"
+            android:text="Ok" />
+
+    </LinearLayout>
+    
+        <LinearLayout
+		android:id="@+id/runCommandLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:layout_weight="1" >
+
+        <EditText
+	        android:id="@+id/editCommandLine"
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        android:layout_weight="7"
+			android:maxLines="1"
+	        android:textSize="20sp" >
+	        <requestFocus />
+   		</EditText>
+        <Button
+            android:id="@+id/buttonCommandOk"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+	        android:textSize="14sp"
+            android:text="Run" />
+
+    </LinearLayout>
 
     <RelativeLayout
         android:id="@+id/arrowsLayout"
@@ -23,7 +65,7 @@
         android:layout_weight="4" >
 
         <Button
-            android:id="@+id/buttonUp"
+            android:id="@+id/buttonArrowUp"
             android:layout_width="80dp"
             android:layout_height="65dp"
             android:layout_centerHorizontal="true"
@@ -31,27 +73,27 @@
             android:text="↑" />
 
         <Button
-            android:id="@+id/buttonDown"
+            android:id="@+id/buttonArrowDown"
             android:layout_width="80dp"
             android:layout_height="65dp"
-            android:layout_below="@id/buttonUp"
+            android:layout_below="@id/buttonArrowUp"
             android:layout_centerHorizontal="true"
             android:text="↓" />
         
         <Button
-            android:id="@+id/buttonLeft"
+            android:id="@+id/buttonArrowLeft"
             android:layout_width="80dp"
             android:layout_height="65dp"
-            android:layout_below="@id/buttonUp"
-            android:layout_toLeftOf="@id/buttonDown"
+            android:layout_below="@id/buttonArrowUp"
+            android:layout_toLeftOf="@id/buttonArrowDown"
             android:text="←" />
         
         <Button
-            android:id="@+id/buttonLeft"
+            android:id="@+id/buttonArrowRight"
             android:layout_width="80dp"
             android:layout_height="65dp"
-            android:layout_below="@id/buttonUp"
-            android:layout_toRightOf="@id/buttonDown"
+            android:layout_below="@id/buttonArrowUp"
+            android:layout_toRightOf="@id/buttonArrowDown"
             android:text="→" />
 
     </RelativeLayout>
@@ -63,21 +105,27 @@
         android:layout_weight="1" >
 
         <Button
-            android:id="@+id/buttonPrev"
+            android:id="@+id/buttonMediaPrev"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="◀◀" />
 
         <Button
-            android:id="@+id/buttonPlayPause"
+            android:id="@+id/buttonMediaPlayPause"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="2"
-            android:text="▶■" />
+            android:text="▶" />
+        <Button
+            android:id="@+id/buttonMediaStop"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:text="■" />
 
         <Button
-            android:id="@+id/buttonNext"
+            android:id="@+id/buttonMediaNext"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -92,25 +140,61 @@
         android:layout_weight="1" >
 
         <Button
-            android:id="@+id/buttonLower"
+            android:id="@+id/buttonVolumeLower"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="2"
             android:text="Lower" />
 
         <Button
-            android:id="@+id/buttonMute"
+            android:id="@+id/buttonVolumeMute"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="Mute" />
 
         <Button
-            android:id="@+id/buttonRaise"
+            android:id="@+id/buttonVolumeRaise"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="2"
             android:text="Higher" />
+
+    </LinearLayout>
+    
+    <LinearLayout
+		android:id="@+id/browserLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="2" >
+
+        <Button
+            android:id="@+id/buttonBrowserReload"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:text="Reload" />
+
+        <Button
+            android:id="@+id/buttonBrowserBack"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Back" />
+
+        <Button
+            android:id="@+id/buttonBrowserForward"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:text="Fwd" />
+
+        <Button
+            android:id="@+id/buttonBrowserSearch"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:text="Jump" />
 
     </LinearLayout>
     
@@ -216,38 +300,102 @@
     </LinearLayout>
     
     <LinearLayout
-		android:id="@+id/otherLayout"
+		android:id="@+id/winLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:visibility="gone"
         android:layout_weight="1" >
 
         <Button
-            android:id="@+id/buttonCtrl"
+            android:id="@+id/buttonCtrlAltDel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="2"
-            android:text="Ctrl" />
+            android:layout_weight="5"
+            android:text="Ctrl+Alt+Del" />
 
         <Button
             android:id="@+id/buttonSuper"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="2"
-            android:text="Super" />
+            android:layout_weight="1"
+            android:text="Win" />
 
         <Button
-            android:id="@+id/buttonAlt"
+            android:id="@+id/buttonWinP"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="2"
-            android:text="Alt" />
+            android:text="Win+P" />
+
+    </LinearLayout>
+    
+        <LinearLayout
+		android:id="@+id/linuxLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1" >
+
+        <Button
+            android:id="@+id/buttonTerminal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="4"
+            android:text="Terminal" />
+
+        <Button
+            android:id="@+id/buttonDash"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:text="Dash" />
+
+        <Button
+            android:id="@+id/buttonSuperW"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:text="Sup+W" />
+        <Button
+            android:id="@+id/buttonSuperS"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:text="Sup+S" />
+
+    </LinearLayout>
+    
+    <LinearLayout
+		android:id="@+id/laptopLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1" >
+
+        <Button
+            android:id="@+id/buttonLightDown"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:text="Br Down" />
         
         <Button
-            android:id="@+id/buttonMenu"
+            android:id="@+id/buttonLightUp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="2"
-            android:text="Menu" />
+            android:text="Br Up" />
+
+        <Button
+            android:id="@+id/buttonSleep"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:text="Sleep" />
+        <Button
+            android:id="@+id/buttonPower"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:text="Power" />
 
     </LinearLayout>
     
