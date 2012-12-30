@@ -304,6 +304,7 @@ public class MainActivity extends Activity implements OnMenuItemClickListener {
 	private PresenterButtonsListener listener;
 	private CommandQueue queue;
 	private boolean mouseMode;
+	private boolean gestureEnabled;
 	private float mouseResolution;
 	private boolean multitouch;
 	private boolean showButtons;
@@ -320,8 +321,9 @@ public class MainActivity extends Activity implements OnMenuItemClickListener {
         	startActivity(new Intent(this, ConnectionActivity.class));
         }
     	mouseMode = preferences.getBoolean("MOUSE", false);
+    	gestureEnabled = preferences.getBoolean("GESTURE_PRESENTER", false);
     	if(mouseMode){
-    		mouseResolution = preferences.getFloat("RESOLUTION", 1.7F);
+    		mouseResolution = preferences.getInt("RESOLUTION", 3)*0.2f + 1.1f;
     		multitouch = preferences.getBoolean("MULTITOUCH", false);
     		showButtons = preferences.getBoolean("BUTTONS", true);
     		loadMouseInterface();
@@ -408,7 +410,7 @@ public class MainActivity extends Activity implements OnMenuItemClickListener {
     	findViewById(R.id.controlLayout).setVisibility(View.VISIBLE);
     	findViewById(R.id.winLayout).setVisibility(preferences.getBoolean("WIN_LAYOUT", false) == true ? View.VISIBLE : View.GONE);
     	findViewById(R.id.linuxLayout).setVisibility(preferences.getBoolean("LINUX_LAYOUT", false) == true ? View.VISIBLE : View.GONE);
-    	findViewById(R.id.laptopLayout).setVisibility(preferences.getBoolean("LAPTOP_LAYOUT", true) == true ? View.VISIBLE : View.GONE);
+    	findViewById(R.id.laptopLayout).setVisibility(preferences.getBoolean("LAPTOP_LAYOUT", false) == true ? View.VISIBLE : View.GONE);
     	
     	findViewById(R.id.buttonLineOk).setOnClickListener(listener);
     	//findViewById(R.id.buttonCommandOk).setOnClickListener(listener); TODO
@@ -435,7 +437,7 @@ public class MainActivity extends Activity implements OnMenuItemClickListener {
 
 	
     public boolean onMenuItemClick(MenuItem item) {
-		// TODO Auto-generated method stub
+		// TODO Checkable items and Gesture presenter
     	switch (item.getItemId()) {
 		case R.id.settingsMenuItem:
 			startActivity(new Intent(this, SettingsActivity.class));
