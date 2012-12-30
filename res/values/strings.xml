@@ -10,6 +10,7 @@
     <string name="multitouch">Multitouch mode</string>
     <string name="showButtons">Show buttons</string>
     <string name="enablePresenter">Switch to presenter mode</string>
+    <string name="enableGesture">Enable gesture presenter</string>
     <string name="connections">Connections</string>
     <string name="title_activity_presenter">Presenter</string>
     <string name="title_activity_connection">Connection</string>
@@ -26,5 +27,22 @@
     <string name="noDevice">Selected device is not supported</string>
     <string name="enableMouse">Switch to mouse mode</string>
     <string name="about">About</string>
+    
+	<!--Settings -->
+	<string name="touchpad">Touchpad</string>
+	<string name="touchpad_resolution">Resolution</string>
+	<string name="presenter_layouts">Remote controls</string>
+	<string name="arrow_switch">Arrow buttons</string>
+	<string name="media_switch">Media buttons</string>
+	<string name="browser_switch">Browser buttons</string>
+	<string name="presenter_switch">Presenter buttons</string>
+	<string name="windows_switch">Windows specific buttons</string>
+	<string name="linux_switch">Linux specific buttons</string>
+	<string name="laptop_switch">Laptop buttons</string>
+	<string name="editline_switch">Keys line</string>
+	<string name="commandline_switch">Command line</string>
+	<string name="gesture_presenter">Gesture presenter</string>
+	<string name="record_gesture">Record gesture</string>
+	<string name="delete_gesture">Delete gesture</string>
 
 </resources>

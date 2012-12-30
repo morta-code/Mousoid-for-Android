@@ -276,7 +276,7 @@ public class MainActivity extends Activity implements OnMenuItemClickListener {
 				head[1] = 1;				
 				break;
 			case R.id.buttonPower:
-				bs = ByteBuffer.allocate(4).putInt(Constant.Key_PowerDown).array();
+				bs = ByteBuffer.allocate(4).putInt(Constant.Key_PowerOff).array();
 				head[1] = 1;				
 				break;
 			case R.id.buttonLineOk:
@@ -319,18 +319,8 @@ public class MainActivity extends Activity implements OnMenuItemClickListener {
         if(ConnectionManager.getConnection() == null){
         	startActivity(new Intent(this, ConnectionActivity.class));
         }
-        // TODO
     	mouseMode = preferences.getBoolean("MOUSE", false);
-        
-    }
-    
-    ///////////////////////////////////////////////////////////////////
-    @Override
-    protected void onResume() {
-        Log.i("MainActivity", "onResume");
-    	if(ConnectionManager.getConnection() == null){
-        	startActivity(new Intent(this, ConnectionActivity.class));
-        }if(mouseMode){
+    	if(mouseMode){
     		mouseResolution = preferences.getFloat("RESOLUTION", 1.7F);
     		multitouch = preferences.getBoolean("MULTITOUCH", false);
     		showButtons = preferences.getBoolean("BUTTONS", true);
@@ -338,6 +328,14 @@ public class MainActivity extends Activity implements OnMenuItemClickListener {
     	}else{
     		loadPresenterInterface();
     	}
+    }
+    
+    ///////////////////////////////////////////////////////////////////
+    @Override
+    protected void onResume() {
+//    	if(ConnectionManager.getConnection() == null){
+//        	startActivity(new Intent(this, ConnectionActivity.class));
+//        }
     	queue = new CommandQueue();
     	super.onResume();
     }
