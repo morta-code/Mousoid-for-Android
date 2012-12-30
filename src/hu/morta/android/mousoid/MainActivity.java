@@ -12,6 +12,8 @@ import android.util.Log;
 import android.view.GestureDetector;
 import android.view.GestureDetector.SimpleOnGestureListener;
 import android.view.Menu;
+import android.view.MenuItem;
+import android.view.MenuItem.OnMenuItemClickListener;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -19,7 +21,7 @@ import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 
-public class MainActivity extends Activity {
+public class MainActivity extends Activity implements OnMenuItemClickListener {
 	
 	class MousoidGestureListener extends GestureDetector.SimpleOnGestureListener{
 		@Override
@@ -107,8 +109,6 @@ public class MainActivity extends Activity {
 	
 	class PresenterButtonsListener implements OnClickListener{
 		public void onClick(View v) {
-			Log.i("Pressed", v.toString());
-			
 			byte[] head = new byte[]{Constant.KEYCOMMAND, 0, 0};
 			byte[] bs = new byte[]{};
 			
@@ -289,10 +289,6 @@ public class MainActivity extends Activity {
 				bs = bb.array();
 				((EditText)findViewById(R.id.editLine)).getEditableText().clear();
 				break;
-			case R.id.buttonCommandOk:
-				bs = ByteBuffer.allocate(4).putInt(Constant.Key_Right).array();
-				head[1] = 1;				
-				break;
 			}
 			
 			byte[] result = new byte[head.length + bs.length];
@@ -325,14 +321,6 @@ public class MainActivity extends Activity {
         }
         // TODO
     	mouseMode = preferences.getBoolean("MOUSE", false);
-        if(mouseMode){
-    		mouseResolution = preferences.getFloat("RESOLUTION", 1.7F);
-    		multitouch = preferences.getBoolean("MULTITOUCH", false);
-    		showButtons = preferences.getBoolean("BUTTONS", true);
-    		loadMouseInterface();
-    	}else{
-    		loadPresenterInterface();
-    	}
         
     }
     
@@ -342,7 +330,14 @@ public class MainActivity extends Activity {
         Log.i("MainActivity", "onResume");
     	if(ConnectionManager.getConnection() == null){
         	startActivity(new Intent(this, ConnectionActivity.class));
-        }
+        }if(mouseMode){
+    		mouseResolution = preferences.getFloat("RESOLUTION", 1.7F);
+    		multitouch = preferences.getBoolean("MULTITOUCH", false);
+    		showButtons = preferences.getBoolean("BUTTONS", true);
+    		loadMouseInterface();
+    	}else{
+    		loadPresenterInterface();
+    	}
     	queue = new CommandQueue();
     	super.onResume();
     }
@@ -357,14 +352,38 @@ public class MainActivity extends Activity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.activity_main, menu);
-        // TODO
+        if(mouseMode){
+        	menu.findItem(R.id.switchModeMenuItem).setTitle(R.string.enablePresenter);
+        	menu.findItem(R.id.multitouchMenuItem).setVisible(true);
+        	menu.findItem(R.id.showButtons).setVisible(true);
+        	menu.findItem(R.id.multitouchMenuItem).setChecked(multitouch);
+        	menu.findItem(R.id.showButtons).setChecked(showButtons);
+        }else{
+        	menu.findItem(R.id.switchModeMenuItem).setTitle(R.string.enableMouse);
+        	menu.findItem(R.id.multitouchMenuItem).setVisible(false);
+        	menu.findItem(R.id.showButtons).setVisible(false);
+        }
+        menu.findItem(R.id.settingsMenuItem).setOnMenuItemClickListener(this);
+        menu.findItem(R.id.switchModeMenuItem).setOnMenuItemClickListener(this);
+        menu.findItem(R.id.multitouchMenuItem).setOnMenuItemClickListener(this);
+        menu.findItem(R.id.showButtons).setOnMenuItemClickListener(this);
+        menu.findItem(R.id.connectionsMenuItem).setOnMenuItemClickListener(this);
+        menu.findItem(R.id.aboutMenuItem).setOnMenuItemClickListener(this);
         return true;
+    }
+    
+    @Override
+    public void onBackPressed() {
+    	preferences.edit().putBoolean("MOUSE", !mouseMode).commit();
+		finish();
+		startActivity(getIntent());
     }
     
     ///////////////////////////////////////////////////////////////////
 
     void loadMouseInterface(){
     	setContentView(R.layout.main_mouse);
+    	setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR);
     	detector = new GestureDetector(this, new MousoidGestureListener());
     	if(preferences.getBoolean("BUTTONS", true)){
     		MouseButtonsListener listener = new MouseButtonsListener();
@@ -391,10 +410,10 @@ public class MainActivity extends Activity {
     	findViewById(R.id.controlLayout).setVisibility(View.VISIBLE);
     	findViewById(R.id.winLayout).setVisibility(preferences.getBoolean("WIN_LAYOUT", false) == true ? View.VISIBLE : View.GONE);
     	findViewById(R.id.linuxLayout).setVisibility(preferences.getBoolean("LINUX_LAYOUT", false) == true ? View.VISIBLE : View.GONE);
-    	findViewById(R.id.laptopLayout).setVisibility(preferences.getBoolean("LAPTOP_LAYOUT", false) == true ? View.VISIBLE : View.GONE);
+    	findViewById(R.id.laptopLayout).setVisibility(preferences.getBoolean("LAPTOP_LAYOUT", true) == true ? View.VISIBLE : View.GONE);
     	
     	findViewById(R.id.buttonLineOk).setOnClickListener(listener);
-    	findViewById(R.id.buttonCommandOk).setOnClickListener(listener);
+    	//findViewById(R.id.buttonCommandOk).setOnClickListener(listener); TODO
     	for (View view : findViewById(R.id.arrowsLayout).getTouchables())		view.setOnClickListener(listener);
     	for (View view : findViewById(R.id.mediaLayout).getTouchables())		view.setOnClickListener(listener);
     	for (View view : findViewById(R.id.volumeLayout).getTouchables())		view.setOnClickListener(listener);
@@ -415,5 +434,38 @@ public class MainActivity extends Activity {
     		return super.onTouchEvent(event);
     	
     }
+
+	
+    public boolean onMenuItemClick(MenuItem item) {
+		// TODO Auto-generated method stub
+    	switch (item.getItemId()) {
+		case R.id.settingsMenuItem:
+			startActivity(new Intent(this, SettingsActivity.class));
+			break;
+		case R.id.switchModeMenuItem:
+			preferences.edit().putBoolean("MOUSE", !mouseMode).commit();
+			finish();
+			startActivity(getIntent());
+			break;
+		case R.id.connectionsMenuItem:
+			startActivity(new Intent(this, ConnectionActivity.class));
+			break;
+		case R.id.multitouchMenuItem:
+			preferences.edit().putBoolean("MULTITOUCH", !multitouch).commit();
+			finish();
+			startActivity(getIntent());
+			break;
+		case R.id.showButtons:
+			preferences.edit().putBoolean("BUTTONS", !showButtons).commit();
+			finish();
+			startActivity(getIntent());
+			break;
+
+		default:
+			Log.i("Menu", item.toString());
+			break;
+		}
+		return false;
+	}
 
 }
