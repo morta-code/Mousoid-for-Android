@@ -14,7 +14,6 @@ import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
-import android.util.Log;
 import android.view.GestureDetector;
 import android.view.GestureDetector.SimpleOnGestureListener;
 import android.view.Menu;
@@ -32,28 +31,10 @@ public class MainActivity extends Activity implements OnMenuItemClickListener, S
 	class MousoidGestureListener extends GestureDetector.SimpleOnGestureListener{
 		@Override
 		public boolean onDoubleTap(MotionEvent e) {
-//			Log.d("onDoubleTap",e.toString());
 			queue.add(new Command(new byte[]{Constant.MOUSEBUTTON, Constant.DOUBLE_CLICK, Constant.MOUSE_LEFT}));
 			return true;
 		}
 		
-//		@Override
-//		public boolean onDoubleTapEvent(MotionEvent e) {
-//			Log.d("onDoubleTapEvent",e.toString());
-//			return true;
-//		}
-		
-//	    @Override
-//	    public boolean onSingleTapUp(MotionEvent ev) {
-//	    	Log.d("onSingleTapUp",ev.toString());
-//	    	return true;
-//	    }
-	    
-//	    @Override
-//	    public void onShowPress(MotionEvent ev) {
-//	    	Log.d("onShowPress",ev.toString());
-//	    }
-	    
 	    @Override
 	    public void onLongPress(MotionEvent ev) {
 //	    	Log.d("onLongPress",ev.toString());
@@ -67,19 +48,7 @@ public class MainActivity extends Activity implements OnMenuItemClickListener, S
 	    	queue.add(new Command(new byte[]{Constant.MOUSEMOVE, (byte)(distanceX*mouseResolution), (byte)(distanceY*mouseResolution)}));
 	    	return true;
 	    }
-	    
-//	    @Override
-//	    public boolean onDown(MotionEvent ev) {
-//	    	Log.d("onDownd",ev.toString());
-//	    	return true;
-//	    }
-	    
-//	    @Override
-//	    public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
-//	    	Log.d("onFling d",e1.toString());
-//	    	Log.d("onFling e2",e2.toString());
-//	    	return true;
-//	    }
+
 	    
 	    // for click
 	    @Override
@@ -332,8 +301,7 @@ public class MainActivity extends Activity implements OnMenuItemClickListener, S
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         this.requestWindowFeature(Window.FEATURE_NO_TITLE);
-    	preferences = getSharedPreferences("Mousoid", 0);
-        Log.i("MainActivity", "onCreate");        
+    	preferences = getSharedPreferences("Mousoid", 0);     
         if(ConnectionManager.getConnection() == null){
         	startActivity(new Intent(this, ConnectionActivity.class));
         }
@@ -347,16 +315,13 @@ public class MainActivity extends Activity implements OnMenuItemClickListener, S
     	}else{
     		loadPresenterInterface();
     	}
-    	if(gestureEnabled)
-    		loadSensor();
     }
 
 	///////////////////////////////////////////////////////////////////
     @Override
     protected void onResume() {
-//    	if(ConnectionManager.getConnection() == null){
-//        	startActivity(new Intent(this, ConnectionActivity.class));
-//        }
+    	if(gestureEnabled)
+    		loadSensor();
     	queue = new CommandQueue();
     	super.onResume();
     }
@@ -439,7 +404,6 @@ public class MainActivity extends Activity implements OnMenuItemClickListener, S
     }
     
     private void loadSensor() {
-    	Log.i("Gesture", "Sensors loading");
     	sManager = (SensorManager) getSystemService(SENSOR_SERVICE);
         sManager.registerListener(this, sManager.getDefaultSensor(Sensor.TYPE_LINEAR_ACCELERATION), SensorManager.SENSOR_DELAY_UI, new Handler());
         GesturePattern.load(preferences.getInt("GP_KEY", Constant.Key_Down));
@@ -476,6 +440,9 @@ public class MainActivity extends Activity implements OnMenuItemClickListener, S
 	        }else{
 	        	loadSensor();
 	        }			
+			break;
+		case R.id.aboutMenuItem:
+			startActivity(new Intent(this, AboutActivity.class));
 			break;
 		}
 		return false;

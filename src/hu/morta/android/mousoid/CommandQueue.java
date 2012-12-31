@@ -2,7 +2,6 @@ package hu.morta.android.mousoid;
 
 import java.util.LinkedList;
 
-import android.util.Log;
 
 public class CommandQueue extends Thread {
 
@@ -31,10 +30,8 @@ public class CommandQueue extends Thread {
 			try {
 				ConnectionManager.sendCommand(poll());
 			} catch (InterruptedException e) {
-				Log.i("CommandQueue", "Thread finished");
 				return;
 			}
 		}
-		Log.i("CommandQueue", "Thread finished");
 	}
 }

@@ -15,7 +15,6 @@ import java.util.TreeMap;
 
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
-import android.util.Log;
 
 public class ConnectionManager {
 	
@@ -33,8 +32,6 @@ public class ConnectionManager {
 		try {
 			connection = new UDPConnection(address);
 		} catch (SocketException e) {
-			Log.w("ConnectionManager", "SocketException!");
-			Log.w("ConnectionManager", address.getHostAddress());
 			return false;
 		}
 		sendName(name);
@@ -62,25 +59,19 @@ public class ConnectionManager {
 			temporarySocket.send(new DatagramPacket(new byte[]{Constant.HEADER, Constant.WHO_ARE_YOU}, 2, InetAddress.getByName("224.0.0.1"), 10066));
 			
 			temporarySocket.setSoTimeout(timeoutInMillis);
-			Log.i("UDP Server:", "I sent UDP");
 			while(true){
 				byte[] buffer = new byte[64];
 				DatagramPacket received = new DatagramPacket(buffer, buffer.length);
 				temporarySocket.receive(received);
-				Log.i("UDP Server:", "I received UDP");
 				byte[] data = received.getData();
-				Log.i("UDP Server:", "Arrived bytes: " + Byte.toString(data[0]) +" "+ Byte.toString(data[1]));
 				if(data[0] != Constant.HEADER) continue;
 				if(data[1] != Constant.NAME) continue;
-				Log.i("UDP Server:", "Arrived datagram OK");
 				InetAddress inetAddress = received.getAddress();
 				String name = "";
 				for(short s = 0; s < data[2]; s++){
 					name += String.valueOf((char)data[3+s]);
 				}
-				Log.i("UDP Server:", "Arrived name: " + name);
 				map.put(name, inetAddress);
-				Log.i("UDP Server:", inetAddress.getHostAddress() + " " +inetAddress.getHostName());
 			}
 		} catch (SocketException e) {
 			e.printStackTrace();
@@ -110,7 +101,6 @@ public class ConnectionManager {
 	
 	public static void sendKey(byte key) {
 		if(connection == null){
-			Log.w("ConnectionManager", "Nincs kapcsolat!");
 			return;
 		}
 		connection.sendBytes(new byte[]{Constant.HEADER, Constant.KEYCOMMAND, key});
@@ -126,7 +116,6 @@ public class ConnectionManager {
 	
 	public static void sendMouseButton(byte action, byte button) {
 		if(connection == null){
-			Log.w("ConnectionManager", "Nincs kapcsolat!");
 			return;
 		}
 		connection.sendBytes(new byte[]{Constant.HEADER, Constant.MOUSEBUTTON, action, button});
@@ -134,7 +123,6 @@ public class ConnectionManager {
 	
 	public static void sendName(CharSequence name) {
 		if(connection == null){
-			Log.w("ConnectionManager", "Nincs kapcsolat!");
 			return;
 		}
 		byte b[] = new byte[name.length()+3];
@@ -149,7 +137,6 @@ public class ConnectionManager {
 
 	public static void sendCommand(Command c){
 		if(connection == null){
-			Log.w("ConnectionManager", "Nincs kapcsolat!");
 			return;
 		}
 		byte[] b = new byte[c.command.length+1];

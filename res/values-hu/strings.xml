@@ -1,4 +1,92 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
+    <!-- Activities -->
+    <string name="app_name">Mousoid</string>
+    <string name="title_activity_main">Mousoid</string>
+    <string name="title_activity_presenter">Prezenter</string>
+    <string name="title_activity_connection">Csatlakozás</string>
+    <string name="title_activity_settings">Beállítások</string>
+    <string name="title_activity_about">Súgó</string>
+    <string name="wifi">Csatlakozás WiFi-n</string>
+    <string name="bluetooth">Csatlakozás Bluetoothon</string>
+    <string name="netName">Hálózati név:</string>
+    <string name="use">Használat:</string>
+    <string name="about_">Névjegy:</string>
+
+    <!-- Buttons -->
+    <string name="left">Bal</string>
+    <string name="middle">Görgő</string>
+    <string name="right">Jobb</string>
+    <string name="down">Le</string>
+    <string name="startscan">Keresés</string>
+    <string name="connect">Csatlakozz</string>
+    <string name="ok">OK</string>
+    <string name="run">Run</string>
+    <string name="mute">Néma</string>
+    <string name="lower">Halkabb</string>
+    <string name="higher">Hangosabb</string>
+    <string name="reload">Újratöltés</string>
+    <string name="bback">Vissza</string>
+    <string name="bfwd">Előre</string>
+    <string name="jump">Ugorj</string>
+    <string name="blank">Blank</string>
+    <string name="white">Fehér</string>
+    <string name="home">Home</string>
+    <string name="pgup">PgUp</string>
+    <string name="pgdn">PgDn</string>
+    <string name="end">End</string>
+    <string name="esc">Esc</string>
+    <string name="space">Szóköz</string>
+    <string name="enter">Enter</string>
+    <string name="cad">Ctrl+Alt+Del</string>
+    <string name="win">Win</string>
+    <string name="winp">Win+P</string>
+    <string name="terminal">Konzol</string>
+    <string name="dash">Dash</string>
+    <string name="supw">Sup+W</string>
+    <string name="sups">Sup+S</string>
+    <string name="brdn">Fényerő le</string>
+    <string name="brup">Fényerő fel</string>
+    <string name="power">Power</string>
+
+    <!-- Menu -->
+    <string name="enablePresenter">Váltás prezenter módba</string>
+    <string name="enableGesture">Kézmozdulat-prezenter be</string>
+    <string name="connections">Csatlakozás</string>
+    <string name="enableMouse">Váltás érintőpad módba</string>
+    <string name="about">Súgó, névjegy</string>
+
+    <!-- Settings -->
+    <string name="touchpad">Érintőpad</string>
+    <string name="multitouch">Többujjas mód</string>
+    <string name="showButtons">Gombok mutatása</string>
+    <string name="touchpad_resolution">Érzékenység</string>
+    <string name="presenter_layouts">Távvezérlők</string>
+    <string name="arrow_switch">Nyíl gombok</string>
+    <string name="media_switch">Médiavezérlő gombok</string>
+    <string name="browser_switch">Böngészővezérlő gombok</string>
+    <string name="presenter_switch">Prezenter gombok</string>
+    <string name="windows_switch">Windows specifikus gombok</string>
+    <string name="linux_switch">Linux specifikus gombok</string>
+    <string name="laptop_switch">Laptop vezérlő gombok</string>
+    <string name="editline_switch">Szövegbeviteli mező</string>
+    <string name="commandline_switch">Parancssor (csak Linuxhoz)</string>
+    <string name="gesture_presenter">Kézmozdulat-prezenter</string>
+    <string name="gesture_command">Parancs</string>
+    <string name="restore_fact">Gyári értékek visszaállítása</string>
+    <string name="restore">Visszaállítás!</string>
+
+    <!-- Toasts -->
+    <string name="longclick">Hosszan érintse meg ehhez a művelethez!</string>
+    <string name="connectionEstablished">Kapcsolat létrejött</string>
+    <string name="noHosts">Nem található szerver</string>
+    <string name="noAddress">Adjon meg egy IP címet, vagy gépnevet!</string>
+    <string name="noDevice">A kiválasztott eszköz nem elérhető!</string>
+    <string name="connectionFailed">Hibás cím, vagy kapcsolat elutasítva!</string>
     
+    <!-- About -->
+    <string name="text_use">Érintőpad üzemmód:\nHasználja a kijelzőt úgy, mint egy laptop érintőpadját. Többujjas és hagyományos módot is választhat.\n\nPrezenter mód:\nHasználja a telefont platform- és szoftverfüggetlen távirányítóként.\nTestreszabhatja a vezérlőket, sőt parancsokat is futtathat.\n\nKézmozdulat-prezenter:\nMind érintőpad, mind Prezenter módban van lehetősége enyhén görbített balra suhintással léptetni. A menüben kapcsolható.\n\nRészletes beállítások a menüből hívhatóak.\n\nSzerverprogram letölthető:\n--Kérnék egy itk-s címet, ha lehet--</string>
+    <string name="text_about">Készült a\nPázmány Péter Katolikus Egyetem számára.\n\nKonzulens:\nTornai Kálmán (tornai.kalman@itk.ppke.hu)\nTervezés és kivitelezés:\nMóréh Tamás (morta@digitus.itk.ppke.hu)\n\nCopyright PPKE-ITK (itk.ppke.hu) 2012-2013</string>
+
 </resources>

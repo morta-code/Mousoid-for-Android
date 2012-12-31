@@ -3,7 +3,6 @@ package hu.morta.android.mousoid;
 import java.io.IOException;
 import java.net.*;
 
-import android.util.Log;
 
 public class UDPConnection implements MousoidConnection {
 	
@@ -17,11 +16,9 @@ public class UDPConnection implements MousoidConnection {
 
 	public void sendBytes(byte[] bytes) {
 		if(address == null){
-			Log.e("UDP", "NuLL Address!");
 			return;
 		}
 		if(socket == null){
-			Log.e("UDP", "NuLL Socket!");
 			return;
 		}
 		try {

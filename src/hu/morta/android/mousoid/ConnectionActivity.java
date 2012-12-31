@@ -15,7 +15,6 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Vibrator;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
@@ -104,9 +103,7 @@ public class ConnectionActivity extends Activity implements OnItemLongClickListe
 				return null;
 			// TODO change to TreeMap<String, String>
 			Set<String> keySet = availableUDPServers.keySet();
-			Log.i("Connection Activity", "Servers found! " + Integer.toString(keySet.size()));
 			for (String string : keySet) {
-				Log.i("Connection Activity", string);
 				ServerListItemData data = new ServerListItemData();
 				data.name = string;
 				data.address = availableUDPServers.get(string).getHostAddress();
@@ -160,7 +157,6 @@ public class ConnectionActivity extends Activity implements OnItemLongClickListe
 			try {
 				b = ConnectionManager.connectToUDP(InetAddress.getByName(params[0]));
 			} catch (UnknownHostException e) {
-				Log.w("ConnectionActivity", "UnknownHostException");
 				return false;
 			}
 			return b;
