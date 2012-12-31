@@ -20,7 +20,7 @@ import android.util.Log;
 public class ConnectionManager {
 	
 	private static MousoidConnection connection = null;
-	public static String name = "Mousoid";
+	public static String name;
 
 	public static MousoidConnection getConnection() {
 		return connection;

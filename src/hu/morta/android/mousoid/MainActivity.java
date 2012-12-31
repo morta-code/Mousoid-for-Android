@@ -93,6 +93,7 @@ public class MainActivity extends Activity implements OnMenuItemClickListener, S
 	
 	class MouseButtonsListener implements OnClickListener{
 		public void onClick(View v) {
+			((Vibrator) getSystemService(VIBRATOR_SERVICE)).vibrate(20);
 			switch (v.getId()) {
 			case R.id.buttonLeft:
 				queue.add(new Command(new byte[]{Constant.MOUSEBUTTON, Constant.CLICK, Constant.MOUSE_LEFT}));

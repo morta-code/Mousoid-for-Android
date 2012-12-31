@@ -244,7 +244,7 @@ public class ConnectionActivity extends Activity implements OnItemLongClickListe
 		bluetoothRadio = (RadioButton) findViewById(R.id.radioBluetooth);
 		bluetoothRadio.setOnClickListener(radioChangedListener);
 		// TODO fekvő helyzetben a lista animálódjon át
-		
+		((TextView) findViewById(R.id.editNetworkName)).setText(MainActivity.preferences.getString("NET_NAME", "Mousoid"));
 	}
 
 	@Override
@@ -254,6 +254,8 @@ public class ConnectionActivity extends Activity implements OnItemLongClickListe
 
 
 	public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+		ConnectionManager.name = ((TextView) findViewById(R.id.editNetworkName)).getEditableText().toString();
+		MainActivity.preferences.edit().putString("NET_NAME", ((TextView) findViewById(R.id.editNetworkName)).getEditableText().toString()).apply();
 		if(wifiSelected)
 			new UDPConnectionTask().execute(((ServerListItemData)serversList.getItemAtPosition(position)).address);
 		else{
@@ -263,6 +265,8 @@ public class ConnectionActivity extends Activity implements OnItemLongClickListe
 	}
 
 	public void onClick(View v) {
+		ConnectionManager.name = ((TextView) findViewById(R.id.editNetworkName)).getEditableText().toString();
+		MainActivity.preferences.edit().putString("NET_NAME", ((TextView) findViewById(R.id.editNetworkName)).getEditableText().toString()).apply();
 		String address = editAddress.getText().toString();
 		if(address == null || address.equals("")){
 			Toast.makeText(ConnectionActivity.this, R.string.noAddress, Toast.LENGTH_SHORT).show();

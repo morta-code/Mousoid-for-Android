@@ -3,14 +3,31 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ConnectionActivity" >
+    
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:text="@string/netName"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <EditText
+        android:id="@+id/editNetworkName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_toRightOf="@+id/textView1"
+        android:ems="8" />
 
     <RadioGroup
         android:id="@+id/radioGroup1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentTop="true" >
+        android:layout_marginTop="10dp"
+		android:layout_below="@+id/editNetworkName" >
 
         <RadioButton
             android:id="@+id/radioWifi"
@@ -79,5 +96,7 @@
         android:layout_alignTop="@+id/buttonStart"
         android:layout_centerHorizontal="true"
         android:visibility="gone" />
+
+    
 
 </RelativeLayout>
