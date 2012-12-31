@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Vibrator;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -114,6 +115,7 @@ public class MainActivity extends Activity implements OnMenuItemClickListener, S
 	
 	class PresenterButtonsListener implements OnClickListener{
 		public void onClick(View v) {
+			((Vibrator) getSystemService(VIBRATOR_SERVICE)).vibrate(20);
 			byte[] head = new byte[]{Constant.KEYCOMMAND, 0, 0};
 			byte[] bs = new byte[]{};
 			
@@ -489,7 +491,7 @@ public class MainActivity extends Activity implements OnMenuItemClickListener, S
     public void onSensorChanged(SensorEvent event) {
 		int key = GesturePattern.getKey(event.values);
 		if(key != 0){
-			Log.i("Gesture", Integer.toString(key));
+			((Vibrator) getSystemService(VIBRATOR_SERVICE)).vibrate(20);
 			byte[] head = new byte[]{Constant.KEYCOMMAND, 1, 0};
 			byte[] bs = ByteBuffer.allocate(4).putInt(key).array();
 						

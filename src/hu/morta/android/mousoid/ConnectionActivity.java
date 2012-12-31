@@ -14,6 +14,7 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Vibrator;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -116,6 +117,7 @@ public class ConnectionActivity extends Activity implements OnItemLongClickListe
 		
 		@Override
 		protected void onPostExecute(ArrayList<ServerListItemData> result) {
+			((Vibrator) getSystemService(VIBRATOR_SERVICE)).vibrate(50);
 			startSearch.setEnabled(true);
 			connectToAddress.setEnabled(true);
 			progressBar.setVisibility(View.GONE);
@@ -171,6 +173,7 @@ public class ConnectionActivity extends Activity implements OnItemLongClickListe
 			progressBar.setVisibility(View.GONE);
 			if(result){
 				Toast.makeText(ConnectionActivity.this, R.string.connectionEstablished, Toast.LENGTH_SHORT).show();
+				((Vibrator) getSystemService(VIBRATOR_SERVICE)).vibrate(70);
 				startActivity(new Intent(ConnectionActivity.this, MainActivity.class));
 			}else{
 				Toast.makeText(ConnectionActivity.this, R.string.connectionFailed, Toast.LENGTH_LONG).show();
