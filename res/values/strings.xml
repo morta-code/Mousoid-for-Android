@@ -40,7 +40,7 @@
 	<string name="linux_switch">Linux specific buttons</string>
 	<string name="laptop_switch">Laptop control buttons</string>
 	<string name="editline_switch">Keys line</string>
-	<string name="commandline_switch">Command line (experimental)</string>
+	<string name="commandline_switch">Command line (on Linux)</string>
 	<string name="gesture_presenter">Gesture presenter</string>
 	<string name="gesture_command">Command</string>
 	<string name="restore_fact">Restore factory settings</string>
