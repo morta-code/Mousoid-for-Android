@@ -13,6 +13,7 @@ import android.view.View.OnLongClickListener;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
+import android.widget.RadioButton;
 import android.widget.SeekBar;
 import android.widget.SeekBar.OnSeekBarChangeListener;
 import android.widget.Toast;
@@ -42,6 +43,8 @@ public class SettingsActivity extends Activity implements OnCheckedChangeListene
     	((ToggleButton)findViewById(R.id.toggleButtonCommandLine)).setChecked(preferences.getBoolean("RUN_COMMAND", false));
     	((ToggleButton)findViewById(R.id.toggleButtonGesture)).setChecked(preferences.getBoolean("GESTURE_PRESENTER", false));
     	((SeekBar)findViewById(R.id.resolutionSeekBar)).setProgress(preferences.getInt("RESOLUTION", 3));
+    	((RadioButton)findViewById(R.id.radioDown)).setChecked(preferences.getInt("GP_KEY", Constant.Key_Down) == Constant.Key_Down);
+    	((RadioButton)findViewById(R.id.radioPgDn)).setChecked(preferences.getInt("GP_KEY", Constant.Key_PageDown) == Constant.Key_PageDown);
     	
     	((ToggleButton)findViewById(R.id.toggleButtonShowButtons)).setOnCheckedChangeListener(this);
     	((ToggleButton)findViewById(R.id.toggleButtonMultitouch)).setOnCheckedChangeListener(this);
@@ -58,6 +61,8 @@ public class SettingsActivity extends Activity implements OnCheckedChangeListene
     	((SeekBar)findViewById(R.id.resolutionSeekBar)).setOnSeekBarChangeListener(this);
     	((Button)findViewById(R.id.buttonRestore)).setOnClickListener(this);
     	((Button)findViewById(R.id.buttonRestore)).setOnLongClickListener(this);
+    	((RadioButton)findViewById(R.id.radioDown)).setOnCheckedChangeListener(this);
+    	((RadioButton)findViewById(R.id.radioPgDn)).setOnCheckedChangeListener(this);
 	}
 	
 	public void onBackPressed() {
@@ -108,6 +113,12 @@ public class SettingsActivity extends Activity implements OnCheckedChangeListene
 			break;
 		case R.id.toggleButtonGesture:
 			editor.putBoolean("GESTURE_PRESENTER", isChecked);
+			break;
+		case R.id.radioDown:
+			editor.putInt("GP_KEY", Constant.Key_Down);
+			break;
+		case R.id.radioPgDn:
+			editor.putInt("GP_KEY", Constant.Key_PageDown);
 			break;
 		}
 	}

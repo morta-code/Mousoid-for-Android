@@ -284,7 +284,7 @@ public class MainActivity extends Activity implements OnMenuItemClickListener, S
 				bs = ByteBuffer.allocate(4).putInt(Constant.Key_PowerOff).array();
 				head[1] = 1;				
 				break;
-			case R.id.buttonLineOk:
+			case R.id.buttonLineOk:{
 				String line = ((EditText)findViewById(R.id.editLine)).getEditableText().toString();
 				head[2] = line.length() > 127 ? 127 : (byte) line.length();			
 				ByteBuffer bb = ByteBuffer.allocate(line.length()*2);
@@ -294,6 +294,14 @@ public class MainActivity extends Activity implements OnMenuItemClickListener, S
 				bs = bb.array();
 				((EditText)findViewById(R.id.editLine)).getEditableText().clear();
 				break;
+			}
+			case R.id.buttonCommandOk:{
+				String line = ((EditText)findViewById(R.id.editCommandLine)).getEditableText().toString();
+				head = new byte[]{Constant.SYSTEM, line.length() > 127 ? 127 : (byte) line.length()};
+				bs = line.getBytes();
+				((EditText)findViewById(R.id.editCommandLine)).getEditableText().clear();
+				break;
+			}
 			}
 			
 			byte[] result = new byte[head.length + bs.length];
@@ -418,7 +426,7 @@ public class MainActivity extends Activity implements OnMenuItemClickListener, S
     	findViewById(R.id.laptopLayout).setVisibility(preferences.getBoolean("LAPTOP_LAYOUT", false) == true ? View.VISIBLE : View.GONE);
     	
     	findViewById(R.id.buttonLineOk).setOnClickListener(listener);
-    	//findViewById(R.id.buttonCommandOk).setOnClickListener(listener); TODO
+    	findViewById(R.id.buttonCommandOk).setOnClickListener(listener);
     	for (View view : findViewById(R.id.arrowsLayout).getTouchables())		view.setOnClickListener(listener);
     	for (View view : findViewById(R.id.mediaLayout).getTouchables())		view.setOnClickListener(listener);
     	for (View view : findViewById(R.id.volumeLayout).getTouchables())		view.setOnClickListener(listener);

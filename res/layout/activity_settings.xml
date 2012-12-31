@@ -313,12 +313,6 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Down" />
-
-                    <RadioButton
-                        android:id="@+id/radioSpace"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Space" />
                 </RadioGroup>
             </LinearLayout>
             

@@ -6,8 +6,7 @@ public interface Constant {
 
     public static final byte WHO_ARE_YOU = -128;
     public static final byte KEYCOMMAND = 1;
-    public static final byte KEYPRESS = 2;
-    public static final byte KEYRELEASE = 3;
+    public static final byte SYSTEM = 2;
     public static final byte MOUSEMOVE = 4;
     public static final byte MOUSEBUTTON = 5;
     public static final byte NAME = 8;
