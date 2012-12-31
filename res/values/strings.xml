@@ -1,35 +1,63 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
+	<!--Activities -->
     <string name="app_name">Mousoid</string>
     <string name="title_activity_main">Mousoid</string>
-    <string name="left">Left</string>
-    <string name="middle">Middle</string>
-    <string name="right">Right</string>
-    <string name="multitouch">Multitouch mode</string>
-    <string name="showButtons">Show buttons</string>
-    <string name="enablePresenter">Switch to presenter mode</string>
-    <string name="enableGesture">Enable gesture presenter</string>
-    <string name="connections">Connections</string>
     <string name="title_activity_presenter">Presenter</string>
     <string name="title_activity_connection">Connection</string>
     <string name="title_activity_settings">Settings</string>
     <string name="wifi">Connect via WiFi</string>
     <string name="bluetooth">Connect via Bluetooth</string>
-    <string name="startscan">Start scan</string>
-    <string name="stopscan">Stop scan</string>
-    <string name="connect">Connect</string>
-    <string name="connectionFailed">Bad address or connection failed</string>
-    <string name="connectionEstablished">Connection established</string>
-    <string name="noHosts">No server host found</string>
-    <string name="noAddress">Enter a hostname or an IP address</string>
-    <string name="noDevice">Selected device is not supported</string>
-    <string name="enableMouse">Switch to mouse mode</string>
     <string name="netName">Network nick:</string>
+    
+    
+    <!--Buttons -->
+    <string name="left">Left</string>
+    <string name="middle">Middle</string>
+    <string name="right">Right</string>
+    <string name="startscan">Start scan</string>
+    <string name="connect">Connect</string>
+    <string name="ok">OK</string>
+    <string name="run">Run</string>
+    <string name="mute">Mute</string>
+    <string name="lower">Lower</string>
+    <string name="higher">Higher</string>
+    <string name="reload">Reload</string>
+    <string name="bback">Back</string>
+    <string name="bfwd">Fwd</string>
+    <string name="jump">Jump</string>
+    <string name="blank">Blank</string>
+    <string name="white">White</string>
+    <string name="home">Home</string>
+    <string name="pgup">PgUp</string>
+    <string name="pgdn">PgDn</string>
+    <string name="end">End</string>
+    <string name="esc">Esc</string>
+    <string name="space">Space</string>
+    <string name="enter">Enter</string>
+    <string name="cad">Ctrl+Alt+Del</string>
+    <string name="win">Win</string>
+    <string name="winp">Win+P</string>
+    <string name="terminal">Terminal</string>
+    <string name="dash">Dash</string>
+    <string name="supw">Sup+W</string>
+    <string name="sups">Sup+S</string>
+    <string name="brdn">Brightness Dn</string>
+    <string name="brup">Brightness Up</string>
+    <string name="power">Power</string>
+    
+    
+    <!--Menu -->
+    <string name="enablePresenter">Switch to presenter mode</string>
+    <string name="enableGesture">Enable gesture presenter</string>
+    <string name="connections">Connections</string>
+    <string name="enableMouse">Switch to mouse mode</string>
     <string name="about">About</string>
     
 	<!--Settings -->
 	<string name="touchpad">Touchpad</string>
+	<string name="multitouch">Multitouch mode</string>
+    <string name="showButtons">Show buttons</string>
 	<string name="touchpad_resolution">Resolution</string>
 	<string name="presenter_layouts">Remote controls</string>
 	<string name="arrow_switch">Arrow buttons</string>
@@ -48,5 +76,10 @@
 	
 	<!--Toasts -->
 	<string name="longclick">Please click long for this action!</string>
+    <string name="connectionEstablished">Connection established</string>
+    <string name="noHosts">No server host found</string>
+    <string name="noAddress">Enter a hostname or an IP address</string>
+    <string name="noDevice">Selected device is not supported</string>
+    <string name="connectionFailed">Bad address or connection failed</string>
 
 </resources>

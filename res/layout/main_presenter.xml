@@ -5,37 +5,44 @@
     android:orientation="vertical" >
 
     <LinearLayout
-		android:id="@+id/lineLayout"
+        android:id="@+id/lineLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:visibility="gone"
-        android:layout_weight="1" >
+        android:layout_weight="1">
 
         <EditText
-	        android:id="@+id/editLine"
-	        android:layout_width="match_parent"
-	        android:layout_height="wrap_content"
-	        android:layout_weight="7"
-			android:maxLines="1"
-	        android:textSize="20sp" >
+            android:id="@+id/editLine"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+	        android:layout_weight="5"
+            android:maxLines="1"
+            android:textSize="20sp" >
+
 	        <requestFocus />
    		</EditText>
+
         <Button
             android:id="@+id/buttonLineOk"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="2"
-	        android:textSize="14sp"
-            android:text="Ok" />
+            android:text="@string/ok"
+            android:textSize="14sp" />
+
+        <Button
+            android:id="@+id/buttonBackspace"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="&lt;x"
+            android:textSize="14sp" />
 
     </LinearLayout>
     
         <LinearLayout
-		android:id="@+id/runCommandLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:visibility="gone"
-        android:layout_weight="1" >
+            android:id="@+id/runCommandLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:visibility="visible" >
 
         <EditText
 	        android:id="@+id/editCommandLine"
@@ -52,7 +59,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="2"
 	        android:textSize="14sp"
-            android:text="Run" />
+            android:text="@string/run" />
 
     </LinearLayout>
 
@@ -62,7 +69,8 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="10dp"
         android:layout_marginTop="10dp"
-        android:layout_weight="4" >
+        android:layout_weight="4"
+        android:visibility="gone" >
 
         <Button
             android:id="@+id/buttonArrowUp"
@@ -99,10 +107,11 @@
     </RelativeLayout>
 
     <LinearLayout
-		android:id="@+id/mediaLayout"
+        android:id="@+id/mediaLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1" >
+        android:layout_weight="1"
+        android:visibility="gone" >
 
         <Button
             android:id="@+id/buttonMediaPrev"
@@ -144,21 +153,21 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="2"
-            android:text="Lower" />
+            android:text="@string/lower" />
 
         <Button
             android:id="@+id/buttonVolumeMute"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Mute" />
+            android:text="@string/mute" />
 
         <Button
             android:id="@+id/buttonVolumeRaise"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="2"
-            android:text="Higher" />
+            android:text="@string/higher" />
 
     </LinearLayout>
     
@@ -173,28 +182,28 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="2"
-            android:text="Reload" />
+            android:text="@string/reload" />
 
         <Button
             android:id="@+id/buttonBrowserBack"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Back" />
+            android:text="@string/bback" />
 
         <Button
             android:id="@+id/buttonBrowserForward"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="2"
-            android:text="Fwd" />
+            android:text="@string/bfwd" />
 
         <Button
             android:id="@+id/buttonBrowserSearch"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="2"
-            android:text="Jump" />
+            android:text="@string/jump" />
 
     </LinearLayout>
     
@@ -223,14 +232,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="2"
-            android:text="Blank" />
+            android:text="@string/blank" />
         
         <Button
             android:id="@+id/buttonWHITE"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="2"
-            android:text="White" />
+            android:text="@string/white" />
 
     </LinearLayout>
     
@@ -245,28 +254,28 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="2"
-            android:text="Home" />
+            android:text="@string/home" />
 
         <Button
             android:id="@+id/buttonPgUp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="2"
-            android:text="PgUp" />
+            android:text="@string/pgup" />
 
         <Button
             android:id="@+id/buttonPgDn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="2"
-            android:text="PgDn" />
+            android:text="@string/pgdn" />
         
         <Button
             android:id="@+id/buttonEnd"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="2"
-            android:text="End" />
+            android:text="@string/end" />
 
     </LinearLayout>
     
@@ -281,121 +290,116 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="2"
-            android:text="Esc" />
+            android:text="@string/esc" />
 
         <Button
             android:id="@+id/buttonSpace"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="5"
-            android:text="Space" />
+            android:text="@string/space" />
         
         <Button
             android:id="@+id/buttonEnter"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="2"
-            android:text="Enter" />
+            android:text="@string/enter" />
 
     </LinearLayout>
     
     <LinearLayout
-		android:id="@+id/winLayout"
+        android:id="@+id/winLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:visibility="gone"
-        android:layout_weight="1" >
+        android:layout_weight="1"
+        android:visibility="visible" >
 
         <Button
             android:id="@+id/buttonCtrlAltDel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="5"
-            android:text="Ctrl+Alt+Del" />
+            android:text="@string/cad" />
 
         <Button
             android:id="@+id/buttonSuper"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Win" />
+            android:text="@string/win" />
 
         <Button
             android:id="@+id/buttonWinP"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="2"
-            android:text="Win+P" />
+            android:text="@string/winp" />
 
     </LinearLayout>
     
         <LinearLayout
-		android:id="@+id/linuxLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1" >
+            android:id="@+id/linuxLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:visibility="visible" >
 
         <Button
             android:id="@+id/buttonTerminal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="4"
-            android:text="Terminal" />
+            android:text="@string/terminal" />
 
         <Button
             android:id="@+id/buttonDash"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="2"
-            android:text="Dash" />
+            android:text="@string/dash" />
 
         <Button
             android:id="@+id/buttonSuperW"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="2"
-            android:text="Sup+W" />
+            android:text="@string/supw" />
         <Button
             android:id="@+id/buttonSuperS"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="2"
-            android:text="Sup+S" />
+            android:text="@string/sups" />
 
     </LinearLayout>
     
     <LinearLayout
-		android:id="@+id/laptopLayout"
+        android:id="@+id/laptopLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1" >
+        android:layout_weight="1"
+        android:visibility="visible" >
 
         <Button
             android:id="@+id/buttonLightDown"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="2"
-            android:text="Br Down" />
+            android:layout_weight="3"
+            android:text="@string/brdn" />
         
         <Button
             android:id="@+id/buttonLightUp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="2"
-            android:text="Br Up" />
-
-        <Button
-            android:id="@+id/buttonSleep"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="2"
-            android:text="Sleep" />
+            android:layout_weight="3"
+            android:text="@string/brup" />
         <Button
             android:id="@+id/buttonPower"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="2"
-            android:text="Power" />
+            android:layout_weight="1"
+            android:text="@string/power" />
 
     </LinearLayout>
     

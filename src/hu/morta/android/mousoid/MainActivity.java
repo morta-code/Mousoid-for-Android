@@ -93,7 +93,7 @@ public class MainActivity extends Activity implements OnMenuItemClickListener, S
 	
 	class MouseButtonsListener implements OnClickListener{
 		public void onClick(View v) {
-			((Vibrator) getSystemService(VIBRATOR_SERVICE)).vibrate(20);
+			((Vibrator) getSystemService(VIBRATOR_SERVICE)).vibrate(35);
 			switch (v.getId()) {
 			case R.id.buttonLeft:
 				queue.add(new Command(new byte[]{Constant.MOUSEBUTTON, Constant.CLICK, Constant.MOUSE_LEFT}));
@@ -116,11 +116,15 @@ public class MainActivity extends Activity implements OnMenuItemClickListener, S
 	
 	class PresenterButtonsListener implements OnClickListener{
 		public void onClick(View v) {
-			((Vibrator) getSystemService(VIBRATOR_SERVICE)).vibrate(20);
+			((Vibrator) getSystemService(VIBRATOR_SERVICE)).vibrate(35);
 			byte[] head = new byte[]{Constant.KEYCOMMAND, 0, 0};
 			byte[] bs = new byte[]{};
 			
 			switch (v.getId()) {
+			case R.id.buttonBackspace:
+				bs = ByteBuffer.allocate(4).putInt(Constant.Key_Backspace).array();
+				head[1] = 1;				
+				break;
 			case R.id.buttonArrowUp:
 				bs = ByteBuffer.allocate(4).putInt(Constant.Key_Up).array();
 				head[1] = 1;				
@@ -279,10 +283,6 @@ public class MainActivity extends Activity implements OnMenuItemClickListener, S
 				bs = ByteBuffer.allocate(4).putInt(Constant.Key_MonBrightnessUp).array();
 				head[1] = 1;				
 				break;
-			case R.id.buttonSleep:
-				bs = ByteBuffer.allocate(4).putInt(Constant.Key_Suspend).array();
-				head[1] = 1;				
-				break;
 			case R.id.buttonPower:
 				bs = ByteBuffer.allocate(4).putInt(Constant.Key_PowerOff).array();
 				head[1] = 1;				
@@ -374,12 +374,6 @@ public class MainActivity extends Activity implements OnMenuItemClickListener, S
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.activity_main, menu);
-        if(mouseMode){
-        	menu.findItem(R.id.switchModeMenuItem).setTitle(R.string.enablePresenter);
-        }else{
-        	menu.findItem(R.id.switchModeMenuItem).setTitle(R.string.enableMouse);
-        }
-        menu.findItem(R.id.gestureMenuItem).setChecked(gestureEnabled);
         menu.findItem(R.id.settingsMenuItem).setOnMenuItemClickListener(this);
         menu.findItem(R.id.switchModeMenuItem).setOnMenuItemClickListener(this);
         menu.findItem(R.id.gestureMenuItem).setOnMenuItemClickListener(this);
@@ -390,6 +384,7 @@ public class MainActivity extends Activity implements OnMenuItemClickListener, S
     
     @Override
     public void onBackPressed() {
+		((Vibrator) getSystemService(VIBRATOR_SERVICE)).vibrate(40);
     	preferences.edit().putBoolean("MOUSE", !mouseMode).commit();
 		finish();
 		startActivity(getIntent());
@@ -430,6 +425,7 @@ public class MainActivity extends Activity implements OnMenuItemClickListener, S
     	
     	findViewById(R.id.buttonLineOk).setOnClickListener(listener);
     	findViewById(R.id.buttonCommandOk).setOnClickListener(listener);
+    	findViewById(R.id.buttonBackspace).setOnClickListener(listener);
     	for (View view : findViewById(R.id.arrowsLayout).getTouchables())		view.setOnClickListener(listener);
     	for (View view : findViewById(R.id.mediaLayout).getTouchables())		view.setOnClickListener(listener);
     	for (View view : findViewById(R.id.volumeLayout).getTouchables())		view.setOnClickListener(listener);
@@ -479,12 +475,22 @@ public class MainActivity extends Activity implements OnMenuItemClickListener, S
 	        	GesturePattern.clear();
 	        }else{
 	        	loadSensor();
-	        }
+	        }			
 			break;
 		}
 		return false;
 	}
 
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+    	if(mouseMode){
+        	menu.findItem(R.id.switchModeMenuItem).setTitle(R.string.enablePresenter);
+        }else{
+        	menu.findItem(R.id.switchModeMenuItem).setTitle(R.string.enableMouse);
+        }
+        menu.findItem(R.id.gestureMenuItem).setChecked(gestureEnabled);
+    	return super.onPrepareOptionsMenu(menu);
+    }
 	
     public void onAccuracyChanged(Sensor sensor, int accuracy) {}
 
