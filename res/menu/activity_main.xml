@@ -1,6 +1,5 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:id="@+id/switchModeMenuItem" android:title="@string/enablePresenter"></item><item android:id="@+id/multitouchMenuItem" android:title="@string/multitouch" android:checkable="true" android:checked="true"></item>
-    <item android:id="@+id/showButtons" android:title="@string/showButtons" android:checkable="true"></item>
+    <item android:id="@+id/switchModeMenuItem" android:title="@string/enablePresenter"></item><item android:id="@+id/gestureMenuItem" android:title="@string/gesture_presenter" android:checkable="true" android:checked="true"></item>
     <item android:id="@+id/connectionsMenuItem" android:title="@string/connections"></item>
     
     <item android:id="@+id/settingsMenuItem" android:title="@string/title_activity_settings"></item>

@@ -4,10 +4,15 @@ import java.nio.ByteBuffer;
 import java.util.ArrayList;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
+import android.hardware.SensorManager;
 import android.util.Log;
 import android.view.GestureDetector;
 import android.view.GestureDetector.SimpleOnGestureListener;
@@ -21,7 +26,7 @@ import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 
-public class MainActivity extends Activity implements OnMenuItemClickListener {
+public class MainActivity extends Activity implements OnMenuItemClickListener, SensorEventListener{
 	
 	class MousoidGestureListener extends GestureDetector.SimpleOnGestureListener{
 		@Override
@@ -303,6 +308,7 @@ public class MainActivity extends Activity implements OnMenuItemClickListener {
 	private GestureDetector detector;
 	private PresenterButtonsListener listener;
 	private CommandQueue queue;
+	private SensorManager sManager;
 	private boolean mouseMode;
 	private boolean gestureEnabled;
 	private float mouseResolution;
@@ -330,9 +336,11 @@ public class MainActivity extends Activity implements OnMenuItemClickListener {
     	}else{
     		loadPresenterInterface();
     	}
+    	if(gestureEnabled)
+    		loadSensor();
     }
-    
-    ///////////////////////////////////////////////////////////////////
+
+	///////////////////////////////////////////////////////////////////
     @Override
     protected void onResume() {
 //    	if(ConnectionManager.getConnection() == null){
@@ -344,7 +352,10 @@ public class MainActivity extends Activity implements OnMenuItemClickListener {
 
     @Override
     protected void onPause() {
-        Log.i("MainActivity", "onPause");
+        if(gestureEnabled){
+        	sManager.unregisterListener(this);
+        	GesturePattern.clear();
+        }
     	queue.interrupt();
     	super.onPause();
     }
@@ -354,19 +365,13 @@ public class MainActivity extends Activity implements OnMenuItemClickListener {
         getMenuInflater().inflate(R.menu.activity_main, menu);
         if(mouseMode){
         	menu.findItem(R.id.switchModeMenuItem).setTitle(R.string.enablePresenter);
-        	menu.findItem(R.id.multitouchMenuItem).setVisible(true);
-        	menu.findItem(R.id.showButtons).setVisible(true);
-        	menu.findItem(R.id.multitouchMenuItem).setChecked(multitouch);
-        	menu.findItem(R.id.showButtons).setChecked(showButtons);
         }else{
         	menu.findItem(R.id.switchModeMenuItem).setTitle(R.string.enableMouse);
-        	menu.findItem(R.id.multitouchMenuItem).setVisible(false);
-        	menu.findItem(R.id.showButtons).setVisible(false);
         }
+        menu.findItem(R.id.gestureMenuItem).setChecked(gestureEnabled);
         menu.findItem(R.id.settingsMenuItem).setOnMenuItemClickListener(this);
         menu.findItem(R.id.switchModeMenuItem).setOnMenuItemClickListener(this);
-        menu.findItem(R.id.multitouchMenuItem).setOnMenuItemClickListener(this);
-        menu.findItem(R.id.showButtons).setOnMenuItemClickListener(this);
+        menu.findItem(R.id.gestureMenuItem).setOnMenuItemClickListener(this);
         menu.findItem(R.id.connectionsMenuItem).setOnMenuItemClickListener(this);
         menu.findItem(R.id.aboutMenuItem).setOnMenuItemClickListener(this);
         return true;
@@ -383,7 +388,7 @@ public class MainActivity extends Activity implements OnMenuItemClickListener {
 
     void loadMouseInterface(){
     	setContentView(R.layout.main_mouse);
-    	setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR);
+    	setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
     	detector = new GestureDetector(this, new MousoidGestureListener());
     	if(preferences.getBoolean("BUTTONS", true)){
     		MouseButtonsListener listener = new MouseButtonsListener();
@@ -398,7 +403,7 @@ public class MainActivity extends Activity implements OnMenuItemClickListener {
     void loadPresenterInterface(){
     	setContentView(R.layout.main_presenter);
     	listener = new PresenterButtonsListener();
-    	setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+    	setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR_PORTRAIT);
     	findViewById(R.id.lineLayout).setVisibility(preferences.getBoolean("LINE_EDIT", true) == true ? View.VISIBLE : View.GONE);
     	findViewById(R.id.runCommandLayout).setVisibility(preferences.getBoolean("RUN_COMMAND", false) == true ? View.VISIBLE : View.GONE);
     	findViewById(R.id.arrowsLayout).setVisibility(preferences.getBoolean("ARROWS_LAYOUT", true) == true ? View.VISIBLE : View.GONE);
@@ -426,6 +431,13 @@ public class MainActivity extends Activity implements OnMenuItemClickListener {
     	for (View view : findViewById(R.id.laptopLayout).getTouchables())		view.setOnClickListener(listener);
     }
     
+    private void loadSensor() {
+    	Log.i("Gesture", "Sensors loading");
+    	sManager = (SensorManager) getSystemService(SENSOR_SERVICE);
+        sManager.registerListener(this, sManager.getDefaultSensor(Sensor.TYPE_LINEAR_ACCELERATION), SensorManager.SENSOR_DELAY_UI, new Handler());
+        GesturePattern.load(preferences.getInt("GP_KEY", Constant.Key_Down));
+	}
+    
     @Override
     public boolean onTouchEvent(MotionEvent event) {
     	if(mouseMode)
@@ -434,10 +446,8 @@ public class MainActivity extends Activity implements OnMenuItemClickListener {
     		return super.onTouchEvent(event);
     	
     }
-
 	
     public boolean onMenuItemClick(MenuItem item) {
-		// TODO Checkable items and Gesture presenter
     	switch (item.getItemId()) {
 		case R.id.settingsMenuItem:
 			startActivity(new Intent(this, SettingsActivity.class));
@@ -450,22 +460,36 @@ public class MainActivity extends Activity implements OnMenuItemClickListener {
 		case R.id.connectionsMenuItem:
 			startActivity(new Intent(this, ConnectionActivity.class));
 			break;
-		case R.id.multitouchMenuItem:
-			preferences.edit().putBoolean("MULTITOUCH", !multitouch).commit();
-			finish();
-			startActivity(getIntent());
-			break;
-		case R.id.showButtons:
-			preferences.edit().putBoolean("BUTTONS", !showButtons).commit();
-			finish();
-			startActivity(getIntent());
-			break;
-
-		default:
-			Log.i("Menu", item.toString());
+		case R.id.gestureMenuItem:
+			gestureEnabled = !gestureEnabled;
+			preferences.edit().putBoolean("GESTURE_PRESENTER", gestureEnabled).commit();
+			if(!gestureEnabled){
+	        	sManager.unregisterListener(this);
+	        	GesturePattern.clear();
+	        }else{
+	        	loadSensor();
+	        }
 			break;
 		}
 		return false;
+	}
+
+	
+    public void onAccuracyChanged(Sensor sensor, int accuracy) {}
+
+	
+    public void onSensorChanged(SensorEvent event) {
+		int key = GesturePattern.getKey(event.values);
+		if(key != 0){
+			Log.i("Gesture", Integer.toString(key));
+			byte[] head = new byte[]{Constant.KEYCOMMAND, 1, 0};
+			byte[] bs = ByteBuffer.allocate(4).putInt(key).array();
+						
+			byte[] result = new byte[7];
+			System.arraycopy(head, 0, result, 0, 3);
+			System.arraycopy(bs, 0, result, 3, 4);
+			queue.add(new Command(result));
+		}
 	}
 
 }
