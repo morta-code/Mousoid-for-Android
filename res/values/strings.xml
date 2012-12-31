@@ -32,17 +32,16 @@
 	<string name="touchpad_resolution">Resolution</string>
 	<string name="presenter_layouts">Remote controls</string>
 	<string name="arrow_switch">Arrow buttons</string>
-	<string name="media_switch">Media buttons</string>
-	<string name="browser_switch">Browser buttons</string>
-	<string name="presenter_switch">Presenter buttons</string>
+	<string name="media_switch">Media control buttons</string>
+	<string name="browser_switch">Browser control buttons</string>
+	<string name="presenter_switch">Presenter control buttons</string>
 	<string name="windows_switch">Windows specific buttons</string>
 	<string name="linux_switch">Linux specific buttons</string>
-	<string name="laptop_switch">Laptop buttons</string>
+	<string name="laptop_switch">Laptop control buttons</string>
 	<string name="editline_switch">Keys line</string>
-	<string name="commandline_switch">Command line</string>
+	<string name="commandline_switch">Command line (experimental)</string>
 	<string name="gesture_presenter">Gesture presenter</string>
-	<string name="record_gesture">Record gesture</string>
-	<string name="delete_gesture">Delete gesture</string>
+	<string name="gesture_command">Command</string>
 	<string name="restore_fact">Restore factory settings</string>
 	<string name="restore">Restore!</string>
 	

@@ -56,9 +56,6 @@ public class SettingsActivity extends Activity implements OnCheckedChangeListene
     	((ToggleButton)findViewById(R.id.toggleButtonCommandLine)).setOnCheckedChangeListener(this);
     	((ToggleButton)findViewById(R.id.toggleButtonGesture)).setOnCheckedChangeListener(this);
     	((SeekBar)findViewById(R.id.resolutionSeekBar)).setOnSeekBarChangeListener(this);
-    	((Button)findViewById(R.id.buttonDeleteGesture)).setOnClickListener(this);
-    	((Button)findViewById(R.id.buttonDeleteGesture)).setOnLongClickListener(this);
-    	((Button)findViewById(R.id.buttonRecordGesture)).setOnClickListener(this);
     	((Button)findViewById(R.id.buttonRestore)).setOnClickListener(this);
     	((Button)findViewById(R.id.buttonRestore)).setOnLongClickListener(this);
 	}
@@ -127,30 +124,15 @@ public class SettingsActivity extends Activity implements OnCheckedChangeListene
 	
 	// Buttons
 	public void onClick(View v) {
-		switch (v.getId()) {
-		case R.id.buttonDeleteGesture:
-		case R.id.buttonRestore:
-			Toast.makeText(this, R.string.longclick, Toast.LENGTH_SHORT).show();
-			break;
-		case R.id.buttonRecordGesture:
-			// TODO
-			break;
-		}
+		Toast.makeText(this, R.string.longclick, Toast.LENGTH_SHORT).show();
 	}
 
 	// Delete buttons
 	public boolean onLongClick(View v) {
-		switch (v.getId()) {
-		case R.id.buttonDeleteGesture:
-			// TODO
-			break;
-		case R.id.buttonRestore:
-			editor.clear();
-			editor.commit();
-			finish();
-			startActivity(getIntent());
-			break;
-		}
+		editor.clear();
+		editor.commit();
+		finish();
+		startActivity(getIntent());
 		return true;
 	}
 

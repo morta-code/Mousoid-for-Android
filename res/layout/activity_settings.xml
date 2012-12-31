@@ -6,16 +6,16 @@
     android:layout_alignParentLeft="true"
     android:layout_alignParentTop="true" >
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical" >
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/touchpad"
-                android:textAppearance="?android:attr/textAppearanceLarge" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/touchpad"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
             
 			<RelativeLayout
                 android:layout_width="match_parent"
@@ -284,32 +284,45 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true" />
+
             </RelativeLayout>
-            <RelativeLayout
-                android:id="@+id/recordGestureLayout"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+        		android:orientation="vertical"
                 android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp" >
-                
-                <Button
-                    android:id="@+id/buttonDeleteGesture"
-                    style="?android:attr/buttonStyleSmall"
+                android:layout_marginRight="5dp" >
+                <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:text="@string/delete_gesture" />
+                    android:text="@string/gesture_command"
+                    android:textAppearance="?android:attr/textAppearanceMedium" />
+                <RadioGroup
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
 
-                <Button
-                    android:id="@+id/buttonRecordGesture"
-                    style="?android:attr/buttonStyleSmall"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentLeft="true"
-                    android:text="@string/record_gesture" />
-                
-            </RelativeLayout>
-         
+                    <RadioButton
+                        android:id="@+id/radioPgDn"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:checked="true"
+                        android:text="PageDown" />
+
+                    <RadioButton
+                        android:id="@+id/radioDown"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Down" />
+
+                    <RadioButton
+                        android:id="@+id/radioSpace"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Space" />
+                </RadioGroup>
+            </LinearLayout>
+            
+			
             
             <TextView
                 android:layout_width="wrap_content"
