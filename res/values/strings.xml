@@ -58,8 +58,8 @@
 
     <!-- Settings -->
     <string name="touchpad">Touchpad</string>
-    <string name="multitouch">Multitouch mode</string>
-    <string name="showButtons">Show buttons</string>
+    <string name="multitouch">Multitouch mode (scrolling)</string>
+    <string name="showButtons">Show scroll buttons</string>
     <string name="touchpad_resolution">Resolution</string>
     <string name="presenter_layouts">Remote controls</string>
     <string name="arrow_switch">Arrow buttons</string>

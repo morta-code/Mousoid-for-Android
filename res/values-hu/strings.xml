@@ -58,8 +58,8 @@
 
     <!-- Settings -->
     <string name="touchpad">Érintőpad</string>
-    <string name="multitouch">Többujjas mód</string>
-    <string name="showButtons">Gombok mutatása</string>
+    <string name="multitouch">Kétujjas görgetés</string>
+    <string name="showButtons">Görgetők mutatása</string>
     <string name="touchpad_resolution">Érzékenység</string>
     <string name="presenter_layouts">Távvezérlők</string>
     <string name="arrow_switch">Nyíl gombok</string>

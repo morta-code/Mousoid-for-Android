@@ -298,11 +298,11 @@ public class MainActivity extends Activity implements OnMenuItemClickListener, S
 	private boolean gestureEnabled;
 	private float mouseResolution;
 	private boolean multitouch;
-	private boolean showButtons;
 	private float p0x0 = 0;
 	private float p0y0 = 0;
 	private float p0x1 = 0;
 	private float p0y1 = 0;
+	private boolean lim = true;
 	
 	///////////////////////////////////////////////////////////////////
 	
@@ -319,7 +319,6 @@ public class MainActivity extends Activity implements OnMenuItemClickListener, S
     	if(mouseMode){
     		mouseResolution = preferences.getInt("RESOLUTION", 3)*0.2f + 1.1f;
     		multitouch = preferences.getBoolean("MULTITOUCH", false);
-    		showButtons = preferences.getBoolean("BUTTONS", true);
     		loadMouseInterface();
     	}else{
     		loadPresenterInterface();
@@ -370,13 +369,16 @@ public class MainActivity extends Activity implements OnMenuItemClickListener, S
     	setContentView(R.layout.main_mouse);
     	setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
     	detector = new GestureDetector(this, new MousoidGestureListener());
+		MouseButtonsListener listener = new MouseButtonsListener();
+		findViewById(R.id.buttonLeft).setOnClickListener(listener);
+		findViewById(R.id.buttonMiddle).setOnClickListener(listener);
+		findViewById(R.id.buttonRight).setOnClickListener(listener);
     	if(preferences.getBoolean("BUTTONS", true)){
-    		MouseButtonsListener listener = new MouseButtonsListener();
-    		findViewById(R.id.buttonLeft).setOnClickListener(listener);
-    		findViewById(R.id.buttonMiddle).setOnClickListener(listener);
-    		findViewById(R.id.buttonRight).setOnClickListener(listener);
     		findViewById(R.id.buttonScrollUp).setOnClickListener(listener);
     		findViewById(R.id.buttonScrollDown).setOnClickListener(listener);
+    	}else{
+    		findViewById(R.id.buttonScrollUp).setVisibility(View.GONE);
+    		findViewById(R.id.buttonScrollDown).setVisibility(View.GONE);
     	}
     }
     
@@ -423,10 +425,8 @@ public class MainActivity extends Activity implements OnMenuItemClickListener, S
     	if(mouseMode){
     		if(multitouch){
     			onMultiTouchEvent(event);
-    			return super.onTouchEvent(event);
-    		}else{
-        		return detector.onTouchEvent(event);
     		}
+    		return detector.onTouchEvent(event);
     	}
     	else
     		return super.onTouchEvent(event);
@@ -491,19 +491,37 @@ public class MainActivity extends Activity implements OnMenuItemClickListener, S
 	}
 
     public void onMultiTouchEvent(MotionEvent e){
-    	switch (e.getAction()){
-    	case MotionEvent.ACTION_SCROLL:
-    		Log.i("MULTI", "SCROLL "+Integer.toString(e.getPointerCount()));
-    		break;
-    	case MotionEvent.ACTION_DOWN:
-    		Log.i("MULTI", "DOWN "+Integer.toString(e.getPointerCount()));
-    		break;
-    	case MotionEvent.ACTION_UP:
-    		Log.i("MULTI", "UP "+Integer.toString(e.getPointerCount()));
-    		break;
-    	case MotionEvent.ACTION_MOVE:
-    		Log.i("MULTI", "MOVE "+Integer.toString(e.getPointerCount()));
-    		break;
+    	if(e.getAction() == MotionEvent.ACTION_DOWN){
+    		p0x0 = 0;
+    		p0y0 = 0;
+    		p0x1 = 0;
+    		p0y1 = 0;
     	}
+    	
+    	if(e.getAction() == MotionEvent.ACTION_MOVE && e.getPointerCount() == 2){
+    		lim = !lim;
+    		if(lim)
+    			return;
+    		if(p0y0 == 0){
+        		p0x0 = e.getX(0);
+        		p0y0 = e.getY(0);
+        		p0x1 = e.getX(1);
+        		p0y1 = e.getY(1);
+        		return;
+    		}
+    		byte step = 10;
+    		if(p0y0 > e.getY(0)+step && p0y1 > e.getY(1)+step){
+    			queue.add(new Command(new byte[]{Constant.MOUSEBUTTON, Constant.SCROLL_VERTICAL, (byte)-1}));
+    		}
+    		if(p0y0+step < e.getY(0) && p0y1+step < e.getY(1)){
+    			queue.add(new Command(new byte[]{Constant.MOUSEBUTTON, Constant.SCROLL_VERTICAL, (byte)1}));
+    		}
+    		p0x0 = e.getX(0);
+    		p0y0 = e.getY(0);
+    		p0x1 = e.getX(1);
+    		p0y1 = e.getY(1);   		
+    		
+    	}
+        
     }
 }

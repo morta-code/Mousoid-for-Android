@@ -58,8 +58,8 @@
 
     <!-- Settings -->
     <string name="touchpad">Тачпад</string>
-    <string name="multitouch">Мультитач</string>
-    <string name="showButtons">Показать кнопки</string>
+    <string name="multitouch">Мультитач прокруткой</string>
+    <string name="showButtons">Показать прокрутки кнопки</string>
     <string name="touchpad_resolution">Резолуция</string>
     <string name="presenter_layouts">Дистанционные управления</string>
     <string name="arrow_switch">Стрелци кнопки</string>
