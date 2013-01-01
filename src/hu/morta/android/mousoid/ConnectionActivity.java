@@ -12,10 +12,12 @@ import android.bluetooth.BluetoothDevice;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
+import android.net.wifi.WifiManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Vibrator;
+import android.provider.Settings;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
@@ -235,7 +237,7 @@ public class ConnectionActivity extends Activity implements OnItemLongClickListe
 		connectToAddress.setOnClickListener(this);
 		progressBar = (ProgressBar) findViewById(R.id.connectionProgressBar);
 		editAddress = (EditText) findViewById(R.id.addressField);
-		
+		editAddress.setText(MainActivity.preferences.getString("LAST_ADDRESS", ""));
 		radioChangedListener = new RadioChangedListener();
 		wifiRadio = (RadioButton) findViewById(R.id.radioWifi);
 		wifiRadio.setOnClickListener(radioChangedListener);
@@ -243,7 +245,22 @@ public class ConnectionActivity extends Activity implements OnItemLongClickListe
 		bluetoothRadio.setOnClickListener(radioChangedListener);
 		((TextView) findViewById(R.id.editNetworkName)).setText(MainActivity.preferences.getString("NET_NAME", "Mousoid"));
 	}
-
+	
+	@Override
+	protected void onResume() {
+		super.onResume();
+		if(!((WifiManager)getSystemService(Context.WIFI_SERVICE)).isWifiEnabled()){
+			findViewById(R.id.buttonEnableWiFi).setVisibility(View.VISIBLE);
+			findViewById(R.id.buttonEnableWiFi).setOnClickListener(new OnClickListener() {
+				public void onClick(View v) {
+					startActivity(new Intent(Settings.ACTION_WIFI_SETTINGS));
+				}
+			});
+		}else{
+			findViewById(R.id.buttonEnableWiFi).setVisibility(View.GONE);
+		}
+	}
+	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		return true;
@@ -275,6 +292,7 @@ public class ConnectionActivity extends Activity implements OnItemLongClickListe
 			Toast.makeText(ConnectionActivity.this, R.string.noAddress, Toast.LENGTH_SHORT).show();
 			return;
 		}
+		MainActivity.preferences.edit().putString("LAST_ADDRESS", editAddress.getEditableText().toString()).apply();
 		new UDPConnectionTask().execute(address);
 	}
 

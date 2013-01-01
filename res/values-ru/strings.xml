@@ -20,6 +20,7 @@
     <string name="down">Вниз</string>
     <string name="startscan">Поиск</string>
     <string name="connect">Подключать</string>
+    <string name="wifioff">Включение WiFi</string>
     <string name="ok">OK</string>
     <string name="run">выполните</string>
     <string name="mute">Немой</string>

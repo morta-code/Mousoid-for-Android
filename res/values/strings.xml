@@ -20,6 +20,7 @@
     <string name="down">Down</string>
     <string name="startscan">Start scan</string>
     <string name="connect">Connect</string>
+    <string name="wifioff">Enable WiFi</string>
     <string name="ok">OK</string>
     <string name="run">Run</string>
     <string name="mute">Mute</string>

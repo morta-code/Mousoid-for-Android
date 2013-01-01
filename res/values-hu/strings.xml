@@ -20,6 +20,7 @@
     <string name="down">Le</string>
     <string name="startscan">Keresés</string>
     <string name="connect">Csatlakozz</string>
+    <string name="wifioff">WiFi bekapcsolása</string>
     <string name="ok">OK</string>
     <string name="run">Run</string>
     <string name="mute">Néma</string>
