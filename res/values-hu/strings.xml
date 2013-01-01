@@ -4,7 +4,6 @@
     <!-- Activities -->
     <string name="app_name">Mousoid</string>
     <string name="title_activity_main">Mousoid</string>
-    <string name="title_activity_presenter">Prezenter</string>
     <string name="title_activity_connection">Csatlakozás</string>
     <string name="title_activity_settings">Beállítások</string>
     <string name="title_activity_about">Súgó</string>

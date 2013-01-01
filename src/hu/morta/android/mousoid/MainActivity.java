@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Vibrator;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
@@ -14,12 +15,15 @@ import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
+import android.util.Log;
 import android.view.GestureDetector;
+import android.view.ScaleGestureDetector;
 import android.view.GestureDetector.SimpleOnGestureListener;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MenuItem.OnMenuItemClickListener;
 import android.view.MotionEvent;
+import android.view.ScaleGestureDetector.OnScaleGestureListener;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
@@ -282,6 +286,7 @@ public class MainActivity extends Activity implements OnMenuItemClickListener, S
 			queue.add(new Command(result));
 		}
 	}
+	
 	///////////////////////////////////////////////////////////////////
 	
 	public static SharedPreferences preferences;
@@ -294,6 +299,10 @@ public class MainActivity extends Activity implements OnMenuItemClickListener, S
 	private float mouseResolution;
 	private boolean multitouch;
 	private boolean showButtons;
+	private float p0x0 = 0;
+	private float p0y0 = 0;
+	private float p0x1 = 0;
+	private float p0y1 = 0;
 	
 	///////////////////////////////////////////////////////////////////
 	
@@ -374,7 +383,7 @@ public class MainActivity extends Activity implements OnMenuItemClickListener, S
     void loadPresenterInterface(){
     	setContentView(R.layout.main_presenter);
     	listener = new PresenterButtonsListener();
-    	setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR_PORTRAIT);
+    	setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
     	findViewById(R.id.lineLayout).setVisibility(preferences.getBoolean("LINE_EDIT", true) == true ? View.VISIBLE : View.GONE);
     	findViewById(R.id.runCommandLayout).setVisibility(preferences.getBoolean("RUN_COMMAND", false) == true ? View.VISIBLE : View.GONE);
     	findViewById(R.id.arrowsLayout).setVisibility(preferences.getBoolean("ARROWS_LAYOUT", true) == true ? View.VISIBLE : View.GONE);
@@ -411,8 +420,14 @@ public class MainActivity extends Activity implements OnMenuItemClickListener, S
     
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-    	if(mouseMode)
-    		return detector.onTouchEvent(event);
+    	if(mouseMode){
+    		if(multitouch){
+    			onMultiTouchEvent(event);
+    			return super.onTouchEvent(event);
+    		}else{
+        		return detector.onTouchEvent(event);
+    		}
+    	}
     	else
     		return super.onTouchEvent(event);
     	
@@ -460,7 +475,6 @@ public class MainActivity extends Activity implements OnMenuItemClickListener, S
     }
 	
     public void onAccuracyChanged(Sensor sensor, int accuracy) {}
-
 	
     public void onSensorChanged(SensorEvent event) {
 		int key = GesturePattern.getKey(event.values);
@@ -476,4 +490,20 @@ public class MainActivity extends Activity implements OnMenuItemClickListener, S
 		}
 	}
 
+    public void onMultiTouchEvent(MotionEvent e){
+    	switch (e.getAction()){
+    	case MotionEvent.ACTION_SCROLL:
+    		Log.i("MULTI", "SCROLL "+Integer.toString(e.getPointerCount()));
+    		break;
+    	case MotionEvent.ACTION_DOWN:
+    		Log.i("MULTI", "DOWN "+Integer.toString(e.getPointerCount()));
+    		break;
+    	case MotionEvent.ACTION_UP:
+    		Log.i("MULTI", "UP "+Integer.toString(e.getPointerCount()));
+    		break;
+    	case MotionEvent.ACTION_MOVE:
+    		Log.i("MULTI", "MOVE "+Integer.toString(e.getPointerCount()));
+    		break;
+    	}
+    }
 }

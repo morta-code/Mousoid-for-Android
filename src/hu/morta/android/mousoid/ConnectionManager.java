@@ -98,29 +98,7 @@ public class ConnectionManager {
 	}
 	
 	////////////////////////////////////////////////////////////////////////
-	
-	public static void sendKey(byte key) {
-		if(connection == null){
-			return;
-		}
-		connection.sendBytes(new byte[]{Constant.HEADER, Constant.KEYCOMMAND, key});
-	}
-	
-	public static void sendMouseWheel() {
-		// TODO
-	}
-	
-	public static void sendMouseMotion() {
-		// TODO
-	}
-	
-	public static void sendMouseButton(byte action, byte button) {
-		if(connection == null){
-			return;
-		}
-		connection.sendBytes(new byte[]{Constant.HEADER, Constant.MOUSEBUTTON, action, button});
-	}
-	
+		
 	public static void sendName(CharSequence name) {
 		if(connection == null){
 			return;

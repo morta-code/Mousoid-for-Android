@@ -11,6 +11,7 @@ import android.app.Activity;
 import android.bluetooth.BluetoothDevice;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
@@ -220,6 +221,7 @@ public class ConnectionActivity extends Activity implements OnItemLongClickListe
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_connection);
+    	setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 		
 		if(adapter == null)
 			adapter = new ServerListItemAdapter(this, R.layout.server_list_item);
@@ -239,7 +241,6 @@ public class ConnectionActivity extends Activity implements OnItemLongClickListe
 		wifiRadio.setOnClickListener(radioChangedListener);
 		bluetoothRadio = (RadioButton) findViewById(R.id.radioBluetooth);
 		bluetoothRadio.setOnClickListener(radioChangedListener);
-		// TODO fekvő helyzetben a lista animálódjon át
 		((TextView) findViewById(R.id.editNetworkName)).setText(MainActivity.preferences.getString("NET_NAME", "Mousoid"));
 	}
 
@@ -248,6 +249,12 @@ public class ConnectionActivity extends Activity implements OnItemLongClickListe
 		return true;
 	}
 
+	@Override
+	public void onBackPressed() {
+		if(ConnectionManager.getConnection() == null)
+			return;
+		super.onBackPressed();
+	}
 
 	public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
 		ConnectionManager.name = ((TextView) findViewById(R.id.editNetworkName)).getEditableText().toString();

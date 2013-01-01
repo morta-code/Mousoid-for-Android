@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Activities -->
+    <string name="app_name">Моузойид</string>
+    <string name="title_activity_main">Моузойид</string>
+    <string name="title_activity_connection">Коннекция</string>
+    <string name="title_activity_settings">Настройки</string>
+    <string name="title_activity_about">Справка</string>
+    <string name="wifi">Коннекция WiFi</string>
+    <string name="bluetooth">Коннекция Bluetooth</string>
+    <string name="netName">Имя:</string>
+    <string name="use">Использование:</string>
+    <string name="about_">Про нас:</string>
+
+    <!-- Buttons -->
+    <string name="left">Лево</string>
+    <string name="middle">Выделите</string>
+    <string name="right">Право</string>
+    <string name="down">Вниз</string>
+    <string name="startscan">Поиск</string>
+    <string name="connect">Подключать</string>
+    <string name="ok">OK</string>
+    <string name="run">выполните</string>
+    <string name="mute">Немой</string>
+    <string name="lower">Тише</string>
+    <string name="higher">Громче</string>
+    <string name="reload">Обновить</string>
+    <string name="bback">Назад</string>
+    <string name="bfwd">Вперёд</string>
+    <string name="jump">перейти</string>
+    <string name="blank">Пустой</string>
+    <string name="white">Белый</string>
+    <string name="home">Home</string>
+    <string name="pgup">PgUp</string>
+    <string name="pgdn">PgDn</string>
+    <string name="end">End</string>
+    <string name="esc">Esc</string>
+    <string name="space">Space</string>
+    <string name="enter">Enter</string>
+    <string name="cad">Ctrl+Alt+Del</string>
+    <string name="win">Win</string>
+    <string name="winp">Win+P</string>
+    <string name="terminal">Терминал</string>
+    <string name="dash">Dash</string>
+    <string name="supw">Sup+W</string>
+    <string name="sups">Sup+S</string>
+    <string name="brdn">Светосила менше</string>
+    <string name="brup">Светосила больше </string>
+    <string name="power">Power</string>
+
+    <!-- Menu -->
+    <string name="enablePresenter">Менять способ презентации</string>
+    <string name="enableGesture">Жест-презентер вкл</string>
+    <string name="connections">Коннекция</string>
+    <string name="enableMouse">Менять способ тачпад</string>
+    <string name="about">Помоч, справка</string>
+
+    <!-- Settings -->
+    <string name="touchpad">Тачпад</string>
+    <string name="multitouch">Мультитач</string>
+    <string name="showButtons">Показать кнопки</string>
+    <string name="touchpad_resolution">Резолуция</string>
+    <string name="presenter_layouts">Дистанционные управления</string>
+    <string name="arrow_switch">Стрелци кнопки</string>
+    <string name="media_switch">Мультимедиа кнопки</string>
+    <string name="browser_switch">Браузер контроль кнопки</string>
+    <string name="presenter_switch">Презентер кнопки</string>
+    <string name="windows_switch">Windows определенных кнопки</string>
+    <string name="linux_switch">Linux определенных кнопки</string>
+    <string name="laptop_switch">Ноутбук контроль кнопки</string>
+    <string name="editline_switch">Поле ввода текста</string>
+    <string name="commandline_switch">Командной строки (для Linux)</string>
+    <string name="gesture_presenter">Жест-презентер</string>
+    <string name="gesture_command">Комманд</string>
+    <string name="restore_fact">Восстановление заводских настроек.</string>
+    <string name="restore">Босстановление!</string>
+
+    <!-- Toasts -->
+    <string name="longclick">Для этого нажмите долго!</string>
+    <string name="connectionEstablished">Соединение установлено</string>
+    <string name="noHosts">Сервер ненайден</string>
+    <string name="noAddress">Введите IP-адрес, или хоста</string>
+    <string name="noDevice">Отобранное устройство неподдержано</string>
+    <string name="connectionFailed">Неправильный адрес, или отказ коннекции</string>
+    
+    <!-- About -->
+    <string name="text_use">Способ тачпад:\nHasználja a kijelzőt úgy, mint egy laptop érintőpadját. Többujjas és hagyományos módot is választhat.\n\nСпособ презентации:\nHasználja a telefont platform- és szoftverfüggetlen távirányítóként.\nTestreszabhatja a vezérlőket, sőt parancsokat is futtathat.\n\nЖест-презентер:\nMind érintőpad, mind Prezenter módban van lehetősége enyhén görbített balra suhintással léptetni. A menüben kapcsolható.\n\nRészletes beállítások a menüből hívhatóak.\n\nSzerverprogram letölthető:\n--Kérnék egy itk-s címet, ha lehet--</string>
+    <string name="text_about">Сделано для\nКатолический Университет Петера Пазманя.\n\nКонсультант:\nКальман Торнайи (tornai.kalman@itk.ppke.hu)\nРазработка и внедрение:\nФома Море (morta@digitus.itk.ppke.hu)\n\nCopyright PPKE-ITK (itk.ppke.hu) 2012-2013</string>
+
+</resources>
