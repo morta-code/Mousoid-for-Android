@@ -86,7 +86,7 @@
     <string name="connectionFailed">Bad address or connection failed</string>
     
     <!-- About -->
-    <string name="text_use">Touchpad mode:\nUse your phone like a touchpad of a notebook. You can choose single- or multitouch mode, too.\n\nPresenter mode:\nYour phone can be a platform and software independent remote control.\nYou can configure the several controllers and can run system commands in addition.\n\nGesture presenter:\nBoth in touchpad and presenter mode can be able to step forward by a gentle hand gesture to left. It can be turned on from menu.\n\nParticular settings can be found at menu.\n\nServer side software can be downloaded:\n--Kérnék egy itk-s címet, ha lehet--</string>
+    <string name="text_use">Touchpad mode:\nUse your phone like a touchpad of a notebook. You can choose single- or multitouch mode, too.\n\nPresenter mode:\nYour phone can be a platform and software independent remote control.\nYou can configure the several controllers and can run system commands in addition.\n\nGesture presenter:\nBoth in touchpad and presenter mode can be able to step forward by a gentle hand gesture to left. It can be turned on from menu.\n\nParticular settings can be found at menu.\n\nServer side software can be downloaded:\nusers.itk.ppke.hu/~morta/mousoid</string>
     <string name="text_about">Made for the\nPázmány Péter Chatolic University\n\nConsultant:\nTornai Kálmán (tornai.kalman@itk.ppke.hu)\nDesign and implementation:\nMóréh Tamás (morta@digitus.itk.ppke.hu)\n\nCopyright PPKE-ITK (itk.ppke.hu) 2012-2013\n\n</string>
 
 
