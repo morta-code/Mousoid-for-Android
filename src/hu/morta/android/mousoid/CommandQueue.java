@@ -6,6 +6,8 @@ import java.util.LinkedList;
 public class CommandQueue extends Thread {
 
 	private final LinkedList<Command> queue;
+
+    ///////////////////////////////////////////////////////////////////
 	
 	public CommandQueue() {
 		queue = new LinkedList<Command>();
@@ -24,6 +26,8 @@ public class CommandQueue extends Thread {
 		return queue.poll();
 	}
 
+    ///////////////////////////////////////////////////////////////////
+	
 	@Override
 	public void run() {
 		while(!isInterrupted()){
@@ -34,4 +38,5 @@ public class CommandQueue extends Thread {
 			}
 		}
 	}
+
 }

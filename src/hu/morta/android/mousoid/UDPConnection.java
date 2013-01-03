@@ -3,12 +3,13 @@ package hu.morta.android.mousoid;
 import java.io.IOException;
 import java.net.*;
 
-
 public class UDPConnection implements MousoidConnection {
 	
 	private DatagramSocket socket;
 	private InetAddress address;
 
+	///////////////////////////////////////////////////////////////////
+	
 	public UDPConnection(InetAddress address) throws SocketException {
 		this.address = address;
 		this.socket = new DatagramSocket(10066);

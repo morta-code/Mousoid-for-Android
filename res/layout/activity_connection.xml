@@ -21,35 +21,12 @@
         android:layout_alignParentTop="true"
         android:layout_toRightOf="@+id/textView1"
         android:ems="8" />
-
-    <RadioGroup
-        android:id="@+id/radioGroup1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_marginTop="10dp"
-		android:layout_below="@+id/editNetworkName" >
-
-        <RadioButton
-            android:id="@+id/radioWifi"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:checked="true"
-            android:text="@string/wifi" />
-
-        <RadioButton
-            android:id="@+id/radioBluetooth"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/bluetooth" />
-
-    </RadioGroup>
     
         <EditText
             android:id="@+id/addressField"
             android:layout_width="230dp"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/radioGroup1"
+            android:layout_below="@+id/editNetworkName"
             android:layout_marginLeft="10dp"
             android:layout_marginTop="10dp"
             android:maxLines="1"

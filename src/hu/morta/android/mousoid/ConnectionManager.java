@@ -5,22 +5,16 @@ import java.io.InterruptedIOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
-import java.net.InterfaceAddress;
-import java.net.NetworkInterface;
-import java.net.SocketAddress;
 import java.net.SocketException;
-import java.util.Map;
-import java.util.Set;
 import java.util.TreeMap;
-
-import android.bluetooth.BluetoothAdapter;
-import android.bluetooth.BluetoothDevice;
 
 public class ConnectionManager {
 	
 	private static MousoidConnection connection = null;
 	public static String name;
 
+    ///////////////////////////////////////////////////////////////////
+	
 	public static MousoidConnection getConnection() {
 		return connection;
 	}
@@ -37,19 +31,7 @@ public class ConnectionManager {
 		sendName(name);
 		return true;
 	}
-	
-	public static synchronized boolean connectToRFCOMM(String address){
-		if(connection != null)
-			connection.close();
-		connection = null;
-		try {
-			connection = new RFCOMMConnection(BluetoothAdapter.getDefaultAdapter().getRemoteDevice(address));
-		} catch (IOException e) {
-			return false;
-		}
-		return true;
-	}
-	
+		
 	public static TreeMap<String, InetAddress> getAvailableUDPServers(int timeoutInMillis) {
 		TreeMap<String, InetAddress> map = new TreeMap<String, InetAddress>();
 		try {
@@ -80,19 +62,6 @@ public class ConnectionManager {
 				return map;
 			}
 			e.printStackTrace();
-		}
-		return map;
-	}
-	
-	public static TreeMap<String, String> getAvailableBluetoothServers() {
-		TreeMap<String, String> map = new TreeMap<String, String>();
-		BluetoothAdapter adapter = BluetoothAdapter.getDefaultAdapter();
-		if(adapter == null){
-			return null;
-		}
-		Set<BluetoothDevice> bondedDevices = adapter.getBondedDevices();
-		for (BluetoothDevice bluetoothDevice : bondedDevices) {
-			map.put(bluetoothDevice.getName(), bluetoothDevice.getAddress());
 		}
 		return map;
 	}

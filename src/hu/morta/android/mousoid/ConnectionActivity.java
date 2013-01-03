@@ -8,14 +8,12 @@ import java.util.Set;
 import java.util.TreeMap;
 
 import android.app.Activity;
-import android.bluetooth.BluetoothDevice;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.net.wifi.WifiManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Handler;
 import android.os.Vibrator;
 import android.provider.Settings;
 import android.view.LayoutInflater;
@@ -24,14 +22,12 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.ProgressBar;
-import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -136,11 +132,7 @@ public class ConnectionActivity extends Activity implements OnItemLongClickListe
 	class SearchButtonListener implements OnClickListener{
 		
 		public void onClick(View v) {
-			if(wifiRadio.isChecked()){
-				new UDPFinderTask().execute();
-			}else{
-				searchBluetooth();
-			}
+			new UDPFinderTask().execute();
 		}
 		
 	}
@@ -181,41 +173,14 @@ public class ConnectionActivity extends Activity implements OnItemLongClickListe
 		
 	}
 	
-	class RadioChangedListener implements OnClickListener{
-		
-		public void onClick(View v) {
-			if(v == wifiRadio && !wifiSelected){
-				editAddress.setVisibility(View.VISIBLE);
-				connectToAddress.setVisibility(View.VISIBLE);
-				adapter.clear();
-				wifiSelected = true;
-				return;
-			}
-			if(v == bluetoothRadio && wifiSelected){
-				editAddress.setVisibility(View.GONE);
-				connectToAddress.setVisibility(View.GONE);
-				adapter.clear();
-				wifiSelected = false;
-				// TODO külön adapterbe a wifi és külön adapterbe a bt (bt-hez nem kell lekérdezés)
-				return;
-			}
-		}
-		
-	}
 	////////////////////////////////////////////////////////////////////////
 	
 	private static ServerListItemAdapter adapter = null;
-	private boolean wifiSelected = true;
-	
 	private ListView serversList;
 	private Button startSearch;
 	private Button connectToAddress;
 	private ProgressBar progressBar;
 	private EditText editAddress;
-	private RadioButton wifiRadio;
-	private RadioButton bluetoothRadio;
-	
-	private RadioChangedListener radioChangedListener;
 
 	////////////////////////////////////////////////////////////////////////
 	
@@ -238,11 +203,6 @@ public class ConnectionActivity extends Activity implements OnItemLongClickListe
 		progressBar = (ProgressBar) findViewById(R.id.connectionProgressBar);
 		editAddress = (EditText) findViewById(R.id.addressField);
 		editAddress.setText(MainActivity.preferences.getString("LAST_ADDRESS", ""));
-		radioChangedListener = new RadioChangedListener();
-		wifiRadio = (RadioButton) findViewById(R.id.radioWifi);
-		wifiRadio.setOnClickListener(radioChangedListener);
-		bluetoothRadio = (RadioButton) findViewById(R.id.radioBluetooth);
-		bluetoothRadio.setOnClickListener(radioChangedListener);
 		((TextView) findViewById(R.id.editNetworkName)).setText(MainActivity.preferences.getString("NET_NAME", "Mousoid"));
 	}
 	
@@ -276,11 +236,7 @@ public class ConnectionActivity extends Activity implements OnItemLongClickListe
 	public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
 		ConnectionManager.name = ((TextView) findViewById(R.id.editNetworkName)).getEditableText().toString();
 		MainActivity.preferences.edit().putString("NET_NAME", ((TextView) findViewById(R.id.editNetworkName)).getEditableText().toString()).apply();
-		if(wifiSelected)
-			new UDPConnectionTask().execute(((ServerListItemData)serversList.getItemAtPosition(position)).address);
-		else{
-			ConnectionManager.connectToRFCOMM(((ServerListItemData)serversList.getItemAtPosition(position)).address);
-		}
+		new UDPConnectionTask().execute(((ServerListItemData)serversList.getItemAtPosition(position)).address);
 		return true;
 	}
 
@@ -296,32 +252,4 @@ public class ConnectionActivity extends Activity implements OnItemLongClickListe
 		new UDPConnectionTask().execute(address);
 	}
 
-	private void searchBluetooth(){
-		startSearch.setEnabled(false);
-		connectToAddress.setEnabled(false);
-		progressBar.setVisibility(View.VISIBLE);
-		adapter.clear();
-		
-		ArrayList<ServerListItemData> datas = new ArrayList<ServerListItemData>();
-		TreeMap<String, String> availableBluetoothServers = ConnectionManager.getAvailableBluetoothServers();
-		if(availableBluetoothServers == null){
-			Toast.makeText(ConnectionActivity.this, R.string.noDevice, Toast.LENGTH_LONG).show();
-			return;
-		}
-		Set<String> keySet = availableBluetoothServers.keySet();
-		for (String string : keySet) {
-			ServerListItemData data = new ServerListItemData();
-			data.name = string;
-			data.address = availableBluetoothServers.get(string);
-			datas.add(data);
-		}
-		
-		startSearch.setEnabled(true);
-		connectToAddress.setEnabled(true);
-		progressBar.setVisibility(View.GONE);
-		if(datas.size() == 0)
-			Toast.makeText(ConnectionActivity.this, R.string.noHosts, Toast.LENGTH_SHORT).show();
-		else
-			adapter.addAll(datas);
-	}
 }

@@ -10,7 +10,6 @@ public class GesturePattern {
 		instance = null;
 	}
 	
-	
 	public static int getKey(float[] values) {
 		values0 = values1.clone();
 		values1 = values2.clone();
@@ -27,12 +26,18 @@ public class GesturePattern {
 		return 0;
 	}
 
+	///////////////////////////////////////////////////////////////////
+	
 	private static GesturePattern instance = null;
+
+	///////////////////////////////////////////////////////////////////
 	
 	private int Key;
 	private static float[] values0 = {0,0,0};
 	private static float[] values1 = {0,0,0};
 	private static float[] values2 = {0,0,0};
+
+	///////////////////////////////////////////////////////////////////
 	
 	private GesturePattern(int key) {
 		Key = key;

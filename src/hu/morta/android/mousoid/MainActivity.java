@@ -1,13 +1,8 @@
 package hu.morta.android.mousoid;
 
 import java.nio.ByteBuffer;
-import java.util.ArrayList;
 
-import android.os.Bundle;
-import android.os.Handler;
-import android.os.Vibrator;
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
@@ -15,19 +10,17 @@ import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
-import android.util.Log;
+import android.os.Bundle;
+import android.os.Handler;
+import android.os.Vibrator;
 import android.view.GestureDetector;
-import android.view.ScaleGestureDetector;
-import android.view.GestureDetector.SimpleOnGestureListener;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MenuItem.OnMenuItemClickListener;
 import android.view.MotionEvent;
-import android.view.ScaleGestureDetector.OnScaleGestureListener;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
-import android.widget.Button;
 import android.widget.EditText;
 
 public class MainActivity extends Activity implements OnMenuItemClickListener, SensorEventListener{
@@ -298,9 +291,7 @@ public class MainActivity extends Activity implements OnMenuItemClickListener, S
 	private boolean gestureEnabled;
 	private float mouseResolution;
 	private boolean multitouch;
-	private float p0x0 = 0;
 	private float p0y0 = 0;
-	private float p0x1 = 0;
 	private float p0y1 = 0;
 	private boolean lim = true;
 	
@@ -325,7 +316,6 @@ public class MainActivity extends Activity implements OnMenuItemClickListener, S
     	}
     }
 
-	///////////////////////////////////////////////////////////////////
     @Override
     protected void onResume() {
     	if(gestureEnabled)
@@ -419,6 +409,8 @@ public class MainActivity extends Activity implements OnMenuItemClickListener, S
         sManager.registerListener(this, sManager.getDefaultSensor(Sensor.TYPE_LINEAR_ACCELERATION), SensorManager.SENSOR_DELAY_UI, new Handler());
         GesturePattern.load(preferences.getInt("GP_KEY", Constant.Key_Down));
 	}
+
+    ///////////////////////////////////////////////////////////////////
     
     @Override
     public boolean onTouchEvent(MotionEvent event) {
@@ -492,9 +484,7 @@ public class MainActivity extends Activity implements OnMenuItemClickListener, S
 
     public void onMultiTouchEvent(MotionEvent e){
     	if(e.getAction() == MotionEvent.ACTION_DOWN){
-    		p0x0 = 0;
     		p0y0 = 0;
-    		p0x1 = 0;
     		p0y1 = 0;
     	}
     	
@@ -503,9 +493,7 @@ public class MainActivity extends Activity implements OnMenuItemClickListener, S
     		if(lim)
     			return;
     		if(p0y0 == 0){
-        		p0x0 = e.getX(0);
         		p0y0 = e.getY(0);
-        		p0x1 = e.getX(1);
         		p0y1 = e.getY(1);
         		return;
     		}
@@ -516,9 +504,7 @@ public class MainActivity extends Activity implements OnMenuItemClickListener, S
     		if(p0y0+step < e.getY(0) && p0y1+step < e.getY(1)){
     			queue.add(new Command(new byte[]{Constant.MOUSEBUTTON, Constant.SCROLL_VERTICAL, (byte)1}));
     		}
-    		p0x0 = e.getX(0);
     		p0y0 = e.getY(0);
-    		p0x1 = e.getX(1);
     		p0y1 = e.getY(1);   		
     		
     	}

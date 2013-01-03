@@ -23,6 +23,8 @@ public class SettingsActivity extends Activity implements OnCheckedChangeListene
 
 	private SharedPreferences preferences = MainActivity.preferences;
 	private Editor editor;
+
+	///////////////////////////////////////////////////////////////////
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -75,6 +77,8 @@ public class SettingsActivity extends Activity implements OnCheckedChangeListene
 		return true;
 	}
 
+	///////////////////////////////////////////////////////////////////
+	
 	// ToggleButtons
 	public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 		switch (buttonView.getId()) {
@@ -132,12 +136,10 @@ public class SettingsActivity extends Activity implements OnCheckedChangeListene
 	public void onStartTrackingTouch(SeekBar seekBar) {}
 	// SeekBar
 	public void onStopTrackingTouch(SeekBar seekBar) {}
-	
 	// Buttons
 	public void onClick(View v) {
 		Toast.makeText(this, R.string.longclick, Toast.LENGTH_SHORT).show();
 	}
-
 	// Delete buttons
 	public boolean onLongClick(View v) {
 		editor.clear();
