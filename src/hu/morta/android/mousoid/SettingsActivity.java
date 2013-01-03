@@ -36,7 +36,7 @@ public class SettingsActivity extends Activity implements OnCheckedChangeListene
     	((ToggleButton)findViewById(R.id.toggleButtonMultitouch)).setChecked(preferences.getBoolean("MULTITOUCH", false));
     	((ToggleButton)findViewById(R.id.toggleButtonArrows)).setChecked(preferences.getBoolean("ARROWS_LAYOUT", true));
     	((ToggleButton)findViewById(R.id.toggleButtonMedia)).setChecked(preferences.getBoolean("MEDIA_LAYOUT", true));
-    	((ToggleButton)findViewById(R.id.toggleButtonBrowser)).setChecked(preferences.getBoolean("BROWSER_LAYOUT", true));
+    	((ToggleButton)findViewById(R.id.toggleButtonBrowser)).setChecked(preferences.getBoolean("BROWSER_LAYOUT", false));
     	((ToggleButton)findViewById(R.id.toggleButtonPresenter)).setChecked(preferences.getBoolean("PRESENTER_LAYOUT", true));
     	((ToggleButton)findViewById(R.id.toggleButtonWindows)).setChecked(preferences.getBoolean("WIN_LAYOUT", false));
     	((ToggleButton)findViewById(R.id.toggleButtonLinux)).setChecked(preferences.getBoolean("LINUX_LAYOUT", false));

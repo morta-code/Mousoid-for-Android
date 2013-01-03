@@ -34,14 +34,12 @@ public class MainActivity extends Activity implements OnMenuItemClickListener, S
 		
 	    @Override
 	    public void onLongPress(MotionEvent ev) {
-//	    	Log.d("onLongPress",ev.toString());
 			queue.add(new Command(new byte[]{Constant.MOUSEBUTTON, Constant.PRESS, Constant.MOUSE_LEFT}));
 	    }
 	    
 	    // for move
 	    @Override
 	    public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
-//	    	Log.d("onScroll",e1.toString() + Float.toString(distanceX)+" "+Float.toString(distanceY));
 	    	queue.add(new Command(new byte[]{Constant.MOUSEMOVE, (byte)(distanceX*mouseResolution), (byte)(distanceY*mouseResolution)}));
 	    	return true;
 	    }
@@ -50,7 +48,6 @@ public class MainActivity extends Activity implements OnMenuItemClickListener, S
 	    // for click
 	    @Override
 	    public boolean onSingleTapConfirmed(MotionEvent e) {
-//	    	Log.d("onSingleTapConfirmed",e.toString());
 	    	queue.add(new Command(new byte[]{Constant.MOUSEBUTTON, Constant.CLICK, Constant.MOUSE_LEFT}));
 	    	return true;
 	    }
@@ -355,7 +352,7 @@ public class MainActivity extends Activity implements OnMenuItemClickListener, S
     
     ///////////////////////////////////////////////////////////////////
 
-    void loadMouseInterface(){
+    private void loadMouseInterface(){
     	setContentView(R.layout.main_mouse);
     	setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
     	detector = new GestureDetector(this, new MousoidGestureListener());
@@ -372,7 +369,7 @@ public class MainActivity extends Activity implements OnMenuItemClickListener, S
     	}
     }
     
-    void loadPresenterInterface(){
+    private void loadPresenterInterface(){
     	setContentView(R.layout.main_presenter);
     	listener = new PresenterButtonsListener();
     	setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
@@ -381,7 +378,7 @@ public class MainActivity extends Activity implements OnMenuItemClickListener, S
     	findViewById(R.id.arrowsLayout).setVisibility(preferences.getBoolean("ARROWS_LAYOUT", true) == true ? View.VISIBLE : View.GONE);
     	findViewById(R.id.mediaLayout).setVisibility(preferences.getBoolean("MEDIA_LAYOUT", true) == true ? View.VISIBLE : View.GONE);
     	findViewById(R.id.volumeLayout).setVisibility(preferences.getBoolean("MEDIA_LAYOUT", true) == true ? View.VISIBLE : View.GONE);
-    	findViewById(R.id.browserLayout).setVisibility(preferences.getBoolean("BROWSER_LAYOUT", true) == true ? View.VISIBLE : View.GONE);
+    	findViewById(R.id.browserLayout).setVisibility(preferences.getBoolean("BROWSER_LAYOUT", false) == true ? View.VISIBLE : View.GONE);
     	findViewById(R.id.presenterLayout).setVisibility(preferences.getBoolean("PRESENTER_LAYOUT", true) == true ? View.VISIBLE : View.GONE);
     	findViewById(R.id.jumpLayout).setVisibility(preferences.getBoolean("PRESENTER_LAYOUT", true) == true ? View.VISIBLE : View.GONE);
     	findViewById(R.id.controlLayout).setVisibility(View.VISIBLE);

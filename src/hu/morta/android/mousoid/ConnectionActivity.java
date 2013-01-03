@@ -100,7 +100,6 @@ public class ConnectionActivity extends Activity implements OnItemLongClickListe
 			TreeMap<String, InetAddress> availableUDPServers = ConnectionManager.getAvailableUDPServers(MainActivity.preferences.getInt("UDPTIMEOUT", 1500));
 			if(availableUDPServers == null)
 				return null;
-			// TODO change to TreeMap<String, String>
 			Set<String> keySet = availableUDPServers.keySet();
 			for (String string : keySet) {
 				ServerListItemData data = new ServerListItemData();
