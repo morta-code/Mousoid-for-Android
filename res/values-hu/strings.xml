@@ -86,7 +86,7 @@
     <string name="connectionFailed">Hibás cím, vagy kapcsolat elutasítva!</string>
     
     <!-- About -->
-    <string name="text_use">Érintőpad üzemmód:\nHasználja a kijelzőt úgy, mint egy laptop érintőpadját. Többujjas és hagyományos módot is választhat.\n\nPrezenter mód:\nHasználja a telefont platform- és szoftverfüggetlen távirányítóként.\nTestreszabhatja a vezérlőket, sőt parancsokat is futtathat.\n\nKézmozdulat-prezenter:\nMind érintőpad, mind Prezenter módban van lehetősége enyhén görbített balra suhintással léptetni. A menüben kapcsolható.\n\nRészletes beállítások a menüből hívhatóak.\n\nSzerverprogram letölthető:\n--Kérnék egy itk-s címet, ha lehet--</string>
+    <string name="text_use">Érintőpad üzemmód:\nHasználja a kijelzőt úgy, mint egy laptop érintőpadját. Többujjas és hagyományos módot is választhat.\n\nPrezenter mód:\nHasználja a telefont platform- és szoftverfüggetlen távirányítóként.\nTestreszabhatja a vezérlőket, sőt parancsokat is futtathat.\n\nKézmozdulat-prezenter:\nMind érintőpad, mind Prezenter módban van lehetősége enyhén görbített balra suhintással léptetni. A menüben kapcsolható.\n\nRészletes beállítások a menüből hívhatóak.\n\nSzerverprogram letölthető:\nusers.itk.ppke.hu/~morta/mousoid</string>
     <string name="text_about">Készült a\nPázmány Péter Katolikus Egyetem számára.\n\nKonzulens:\nTornai Kálmán (tornai.kalman@itk.ppke.hu)\nTervezés és kivitelezés:\nMóréh Tamás (morta@digitus.itk.ppke.hu)\n\nCopyright PPKE-ITK (itk.ppke.hu) 2012-2013</string>
 
 </resources>
