@@ -162,11 +162,11 @@ public class MainActivity extends Activity implements OnMenuItemClickListener, S
 				head[1] = 2;				
 				break;
 			case R.id.buttonBLANK:
-				bs = ByteBuffer.allocate(2).putChar('b').array();
+				bs = ByteBuffer.allocate(2).putChar('B').array();
 				head[2] = 1;				
 				break;
 			case R.id.buttonWHITE:
-				bs = ByteBuffer.allocate(2).putChar('w').array();
+				bs = ByteBuffer.allocate(2).putChar('W').array();
 				head[2] = 1;				
 				break;
 			case R.id.buttonHome:
@@ -212,7 +212,7 @@ public class MainActivity extends Activity implements OnMenuItemClickListener, S
 			case R.id.buttonWinP:
 				bs = new byte[6];
 				System.arraycopy(ByteBuffer.allocate(4).putInt(Constant.Key_Super_L).array(), 0, bs, 0, 4);
-				System.arraycopy(ByteBuffer.allocate(2).putChar('p').array(), 0, bs, 4, 2);
+				System.arraycopy(ByteBuffer.allocate(2).putChar('P').array(), 0, bs, 4, 2);
 				head[1] = 1;				
 				head[2] = 1;				
 				break;
